@@ -13,10 +13,9 @@ const setting = {
   // 进行编译的依赖
   transpileDependencies: [],
   // 默认的接口地址 如果是开发环境和生产环境走mock-server，当然你也可以选择自己配置成需要的接口地址
-  baseURL: process.env.NODE_ENV === 'development' // 'http://82.156.199.128:8081' : '/api',
-    ?
-    // 'api' : '/api',
-    '/ab-ent-admin/api' : '/ab-ent-admin/api', //dev环境
+
+  // baseURL: process.env.NODE_ENV === 'development' ? '' : '', //根据环境访问不同的域名
+  baseURL: 'localhost:1001',//当前访问的是本地域名
 
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
   title: '共享田园管理端',

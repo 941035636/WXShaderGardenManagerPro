@@ -90,6 +90,8 @@
 <script>
 import { getCaptcha } from '@/api/user'
 import { validateKey } from '@/utils/validateFrom'
+import { loginRSA, tokenName, baseURL } from '@/config'
+
 export default {
   name: 'Login',
   directives: {
@@ -161,7 +163,7 @@ export default {
     },
   },
   created() {
-    this.getCapchas()
+    // this.getCapchas()
     document.body.style.overflow = 'hidden'
   },
   beforeDestroy() {
@@ -264,8 +266,8 @@ export default {
 <style lang="scss" scoped>
 .login-container {
   height: 100vh;
-  background: url('~@/assets/login_images/background.png') center center fixed
-    no-repeat;
+  // background: url('~@/assets/login_images/background.png') center center fixed no-repeat;
+  background: url('~@/assets/login_images/logInImage.jpg')center center fixed no-repeat;
   background-size: cover;
 
   .title {
