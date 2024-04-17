@@ -1,0 +1,10 @@
+{
+  "project_name": "隐患排查系统",
+  "province_name":"",
+  "provice": "00",
+  "province_code": "000000",
+  "street_code": "000000000000",
+  "startYear":"2021",
+  "endYear":"2025",
+  "background_png":"~@/assets/login_images/background.png"
+}
