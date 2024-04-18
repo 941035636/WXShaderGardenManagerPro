@@ -42,6 +42,14 @@ export function logout() {
   })
 }
 
+export function getLogin(data) {
+  return request({
+    url: baseURL + '/user/login',
+    method: 'post',
+    data
+  })
+}
+
 export function register() {
   return request({
     url: '/register',

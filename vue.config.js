@@ -64,7 +64,7 @@ module.exports = {
     proxy: {
       ['api']: {
         // target: `https://ab-ent-admin-dev.chinasafetyins.com`,
-        target: `http://ab-ent-admin-dev.chinasafetyins.com`,
+        target: `http://10.11.17.230:1001`,
         // target: `http://yingji-admin-dev.jiangtai.com/api`,
         ws: true,
         changeOrigin: true,

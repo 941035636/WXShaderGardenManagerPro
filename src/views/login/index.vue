@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { getCaptcha } from '@/api/user'
+import { getCaptch , getLogin} from '@/api/user'
 import { validateKey } from '@/utils/validateFrom'
 import { loginRSA, tokenName, baseURL } from '@/config'
 
@@ -164,6 +164,7 @@ export default {
   },
   created() {
     // this.getCapchas()
+    console.log( baseURL ,'看看这个值是什么');
     document.body.style.overflow = 'hidden'
   },
   beforeDestroy() {
@@ -213,7 +214,16 @@ export default {
       this.form.imgVerifyCode = ''
       this.getCapchas()
     },
+    async getlogin(){
+      let data = {
+        username:"姜海龙",
+        passwordCode:"123456"
+      }
+      let res = await getLogin(data);
+    },
     handleLogin() {
+      this.getlogin();
+      return false;
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.loading = true
