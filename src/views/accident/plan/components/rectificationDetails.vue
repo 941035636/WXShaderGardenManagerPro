@@ -72,7 +72,7 @@
   import { getOrgList } from '@/api/userDataManagement'
   import { getBranchDetails } from '@/api/userDataManagement'
   import { getEnum } from '@/api/caseManagement'
-  import { addDanger } from '@/api/accidentManagement'
+  import { addDanger } from '@/service/accidentManagement'
   export default {
     name: 'AddOrAlter',
     props: {},
@@ -196,7 +196,7 @@
         }
         let res = await addDanger(formData)
         if (res.code === '0000') {
-          this.$baseMessage('添加成功', 'success')
+          this.$message.success('添加成功')
           this.dialogVisible = false
         }
       },
@@ -262,7 +262,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang="less">
   .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

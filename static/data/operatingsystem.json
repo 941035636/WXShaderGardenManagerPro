@@ -1,0 +1,22 @@
+{
+  "data":[
+		{
+         "code":"1",
+		 "name":"windows"
+		},
+		{
+          "code":"2",
+         "name":"mac"
+		},
+		{
+        "code":"3",
+		"name":"ios"
+		},
+		{
+	    "code":"4",
+	 	"name":"android"
+		}
+     
+  ]
+
+}

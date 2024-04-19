@@ -1,0 +1,33 @@
+{
+	"list": 
+	[
+		{
+			"valuesCode": "dt",
+			"elementValues": "电梯"
+		}, 
+		{
+			"valuesCode": "sd",
+			"elementValues": "客运索道"
+		}, 
+		{
+			"valuesCode": "qzjx",
+			"elementValues": "起重机械"
+		},
+		{
+			"valuesCode": "wy",
+			"elementValues": "物业"
+		},
+		{
+			"valuesCode": "jz",
+			"elementValues": "家政服务"
+		},
+		{
+			"valuesCode": "ba",
+			"elementValues": "保安"
+		},
+		{
+			"valuesCode": "sqzh",
+			"elementValues": "社区综合"
+		}
+	]
+}

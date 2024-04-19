@@ -1,28 +1,22 @@
-/**
- * @description 导入所有 vuex 模块，自动加入namespaced:true，用于解决vuex命名冲突，请勿修改。
- */
+/*jshint esversion: 6 */
+import vue from 'vue';
+import Vuex from 'vuex';
+import VuexPersistence from 'vuex-persist'//Vuex 持久化存储 (必需)
+import caseInfo from './modules/caseInfo' //用户信息
+import userInfo from './modules/userInfo' //用户信息
+import policyentry  from './modules/policyentry';
+import enums  from './modules/enums';
+import caseInfoNew  from './modules/caseInfoNew';
+vue.use(Vuex);
 
-import Vue from 'vue'
-import Vuex from 'vuex'
-import createPersistedState from 'vuex-persistedstate' //vuex的持久化存储
-Vue.use(Vuex)
-const files = require.context('./modules', false, /\.js$/)
-const modules = {}
-
-files.keys().forEach((key) => {
-  modules[key.replace(/(\.\/|\.js)/g, '')] = files(key).default
-})
-Object.keys(modules).forEach((key) => {
-  modules[key]['namespaced'] = true
+const vuexLocal = new VuexPersistence({
+	storage: window.sessionStorage
 })
 const store = new Vuex.Store({
-  modules,
-  plugins: [
-    createPersistedState({
-      paths: ['formDatas', 'policyInfo'],
-      //将path中选中的模块同时存储在localStroage中
-      storage: window.sessionStorage,
-    }),
-  ],
-})
-export default store
+	modules: {
+		caseInfo,userInfo,policyentry,enums,caseInfoNew
+	},
+	plugins: [vuexLocal.plugin]
+});
+
+export default store;

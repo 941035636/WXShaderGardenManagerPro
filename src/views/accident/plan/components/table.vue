@@ -71,7 +71,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
   #table-1 {
     width: 100%;
     .div-two {

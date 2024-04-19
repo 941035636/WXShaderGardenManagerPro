@@ -1,0 +1,47 @@
+{
+    "data": [
+        {
+            "value": "00",
+            "label": "保单号",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "01",
+            "label": "签单日期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "02",
+            "label": "保险起期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "03",
+            "label": "保险止期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "04",
+            "label": "投保人",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "05",
+            "label": "统一信用代码",
+            "code":"",
+            "newCode":"",
+            "show":true
+        }
+    ]
+
+}

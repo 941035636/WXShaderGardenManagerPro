@@ -1,0 +1,33 @@
+{
+    "data": [
+        {
+            "value": "00",
+            "label": "批单号",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "01",
+            "label": "签单日期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "02",
+            "label": "保险起期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        },
+        {
+            "value": "03",
+            "label": "保险止期",
+            "code":"",
+            "newCode":"",
+            "show":true
+        }
+    ]
+
+}

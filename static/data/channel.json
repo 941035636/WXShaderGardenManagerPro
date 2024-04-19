@@ -1,0 +1,265 @@
+{
+  	"data":[
+		{
+			"code":"edu",
+			"name":"教保渠道"
+		},
+		{
+			"code":"med",
+			"name":"卫生渠道"
+		},
+		{
+			"code":"tour",
+			"name":"旅游渠道"
+		},
+		{
+			"code":"pvt",
+			"name":"私人保险渠道"
+		},
+		{
+			"code":"sequip",
+			"name":"特设渠道"
+		},
+		{
+			"code":"safety",
+			"name":"安责渠道"
+		},
+		{
+			"code":"lib",
+			"name":"人身险"
+		},
+		{
+			"code":"sales",
+			"name":"销管"
+		},
+		{
+			"code":"bms",
+			"name":"业管"
+		},
+		{
+			"code":"jteb",
+			"name":"江泰E保"
+		},
+		{
+			"code":"case",
+			"name":"案件中心"
+		},
+		{
+			"code":"jtpf",
+			"name":"保险大平台"
+		},
+		{
+			"code":"thb",
+			"name":"特惠保渠道"
+		},{
+			"code":"fssafety",
+			"name":"佛山安责"
+		},
+		{
+			"code":"home",
+			"name":"官网渠道"
+		},
+		{
+			"code":"food",
+			"name":"食安保渠道"
+		},
+		{
+			"code":"tech",
+			"name":"智能平台"
+		},
+		{
+			"code":"frb",
+			"name":"法人保险渠道"
+		},
+		{
+			"code":"thb-2021",
+			"name":"特惠保2021"
+		}
+	],
+	"hYCategory":[
+		{
+			"value": "dtCategory",
+			"label": "电梯行业",
+			"children": [
+				{
+					"value": "dt",
+					"label": "电梯责任险"
+				},
+				{
+					"value": "gz",
+					"label": "雇主责任险"
+				},
+				{
+					"value": "ty",
+					"label": "团体意外险"
+				},
+				{
+					"value": "qp",
+					"label": "气瓶责任险"
+				}
+			]
+		},
+		{
+			"label": "物业行业",
+			"value": "wyCategory",
+			"children": [
+				{
+					"label": "物业责任险",
+					"value": "wy"
+				},
+				{
+					"label": "物业雇主责任险",
+					"value": "wygz"
+				}
+			]
+		},
+		{
+			"label": "家政行业",
+			"value": "jzCategory",
+			"children": [
+				{
+					"label": "家政责任险",
+					"value": "jz"
+				},
+				{
+					"label": "家政雇主责任险",
+					"value": "jzgz"
+				}
+			]
+		},
+		{
+			"label": "保安行业",
+			"value": "abCategory",
+			"children": [
+				{
+					"label": "安保卫士",
+					"value": "ab"
+				},
+				{
+					"label": "保安雇主责任险",
+					"value": "abgz"
+				}
+			]
+		},
+		{
+			"label": "社区配套",
+			"value": "sqCategory",
+			"children": [
+				{
+					"label": "特种设备责任险",
+					"value": "tzsbzrx"
+				},
+				{
+					"label": "家庭财产保险",
+					"value": "jc"
+				}
+			]
+		},
+		{
+			"label": "客运索道",
+			"value": "sdCategory",
+			"children": [
+				{
+					"label": "客运索道责任险",
+					"value": "sd"
+				}
+			]
+		},
+		{
+			"label": "社区综合",
+			"value": "yjspCategory",
+			"children": [
+				{
+					"label": "沿街商铺责任险",
+					"value": "yjsp"
+				},
+				{
+					"label": "装修安装工程险",
+					"value": "zxaz"
+				}
+			]
+		},
+		{
+			"value": "qzjxCategory",
+			"label": "起重机械",
+			"children": [
+				{
+					"value": "qzjx",
+					"label": "起重机械综合保险"
+				}
+			]
+		},
+		{
+			"value": "jcCategory",
+			"label": "设备检测",
+			"children": [
+				{
+					"value": "zy",
+					"label": "职业责任险"
+				}
+			]
+		}
+	],
+	"companyList":[
+		{
+			"label": "中国平安",
+			"value": "1"
+		},
+		{
+			"label": "中国人寿",
+			"value": "2"
+		},
+		{
+			"label": "中国人保",
+			"value": "3"
+		},
+		{
+			"label": "大地财产",
+			"value": "4"
+		},
+		{
+			"label": "华安保险",
+			"value": "5"
+		},
+		{
+			"label": "阳光财产",
+			"value": "6"
+		},
+		{
+			"label": "中华联合",
+			"value": "7"
+		},
+		{
+			"label": "英大泰和",
+			"value": "8"
+		},
+		{
+			"label": "诚泰财产",
+			"value": "9"
+		},
+		{
+			"label": "华泰财产",
+			"value": "10"
+		},
+		{
+			"label": "中国太保",
+			"value": "11"
+		},
+		{
+			"label": "泰康保险",
+			"value": "12"
+		},
+		{
+			"label": "紫金财产",
+			"value": "13"
+		},
+		{
+			"label": "融盛财产",
+			"value": "14"
+		},
+		{
+			"label": "天安财产",
+			"value": "15"
+		}
+	]
+}

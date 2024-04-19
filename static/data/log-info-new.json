@@ -1,0 +1,354 @@
+{
+    "data": [
+        {
+            "actionType": "修改保费",
+            "operationTypeCode": "M1-001",
+            "actionYWType": "保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "beforePerm",
+                "afterPerm"
+            ],
+            "actionDetail": "将保费由{beforePerm}，改为{afterPerm}"
+        },
+        {
+            "actionType": "到账确认",
+            "operationTypeCode": "M1-002",
+            "actionYWType": "保单",
+            "businessTypeCode": "afId",
+            "params": [
+                "amount"
+            ],
+            "actionDetail": "确认到账{amount}"
+        },
+        {
+            "actionType": "保单上传",
+            "operationTypeCode": "M1-003",
+            "actionYWType": "保单",
+            "businessTypeCode": "appCode",
+            "params": [
+                "policyNo"
+            ],
+            "actionDetail": "上传保单号{policyNo}"
+        },
+        {
+            "actionType": "批量导出",
+            "operationTypeCode": "M1-004",
+            "actionYWType": "保单",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "productCategory1",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出{productCategory1}保单，共计{total}记录。"
+        },
+        {
+            "actionType": "导出设备清单",
+            "operationTypeCode": "M1-005",
+            "actionYWType": "保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "applicationFormCode"
+            ],
+            "actionDetail": "导出{applicationFormCode}设备清单"
+        },
+        {
+            "actionType": "发送支付通知",
+            "operationTypeCode": "M1-006",
+            "actionYWType": "保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "applicationFormCode"
+            ],
+            "actionDetail": "发送{applicationFormCode}支付通知"
+        },
+        {
+            "actionType": "认领保单",
+            "operationTypeCode": "M1-007",
+            "actionYWType": "保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "applicationFormCode",
+                "msg"
+            ],
+            "actionDetail": "认领业务结算平台保单：{applicationFormCode}，{msg}"
+        },
+        {
+            "actionType": "线下保单",
+            "operationTypeCode": "M1-008",
+            "actionYWType": "保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "productName",
+                "holderName",
+                "amount",
+                "policyNo"
+            ],
+            "actionDetail": "{productName}，保单号：{policyNo}，投保人名称为{holderName}，保费{amount}"
+        },
+        {
+            "actionType": "上传",
+            "operationTypeCode": "M2-001",
+            "actionYWType": "发票",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "invoiceId"
+            ],
+            "actionDetail": "上传{invoiceId}发票"
+        },
+        {
+            "actionType": "下载",
+            "operationTypeCode": "M2-002",
+            "actionYWType": "发票",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "invoiceId"
+            ],
+            "actionDetail": "下载{invoiceId}发票"
+        },
+        {
+            "actionType": "导出",
+            "operationTypeCode": "M2-003",
+            "actionYWType": "发票",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出发票清单，共计{total}记录。"
+        },
+        {
+            "actionType": "导出支付清单",
+            "operationTypeCode": "M3-001",
+            "actionYWType": "支付",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出支付清单，共计{total}记录。"
+        },
+        {
+            "actionType": "导出交易流水",
+            "operationTypeCode": "M3-002",
+            "actionYWType": "支付",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出交易流水，共计{total}记录。"
+        },
+        {
+            "actionType": "财务对账",
+            "operationTypeCode": "M3-003",
+            "actionYWType": "支付",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName"
+            ],
+            "actionDetail": "{userName}|{branchName}：对账。"
+        },
+        {
+            "actionType": "修改企业",
+            "operationTypeCode": "M5-002",
+            "actionYWType": "账号",
+            "businessTypeCode": "value",
+            "params": [
+                "orgFullNameBefore",
+                "orgFullName"
+            ],
+            "actionDetail": "修改前：{orgFullNameBefore}，修改后：{orgFullName}"
+        },
+        {
+            "actionType": "停用",
+            "operationTypeCode": "M5-003",
+            "actionYWType": "账号",
+            "businessTypeCode": "userLoginId",
+            "params": [],
+            "actionDetail": "停用账号"
+        },
+        {
+            "actionType": "重置密码",
+            "operationTypeCode": "M5-004",
+            "actionYWType": "账号",
+            "businessTypeCode": "loginId",
+            "params": [],
+            "actionDetail": "重置密码"
+        },
+        {
+            "actionType": "修改登录账号",
+            "operationTypeCode": "M5-008",
+            "actionYWType": "账号",
+            "businessTypeCode": "beforeAccount",
+            "params": [
+                "adminName",
+                "beforeAccount",
+                "afterAccount"
+            ],
+            "actionDetail": "修改账号：{adminName}，修改前{beforeAccount}修改后{afterAccount}"
+        },
+        {
+            "actionType": "申请",
+            "operationTypeCode": "M6-001",
+            "actionYWType": "冲正",
+            "businessTypeCode": "correctNo",
+            "params": [
+                "correctTypeName",
+                "correctContent",
+                "correctContentBack"
+            ],
+            "actionDetail": "{correctTypeName}：原信息{correctContent}，冲正后{correctContentBack}"
+        },
+        {
+            "actionType": "修改",
+            "operationTypeCode": "M6-002",
+            "actionYWType": "冲正",
+            "businessTypeCode": "correctNo",
+            "params": [
+                "correctTypeName",
+                "correctContent",
+                "correctContentBack"
+            ],
+            "actionDetail": "{correctTypeName}：原信息{correctContent}，冲正后{correctContentBack}"
+        },
+        {
+            "actionType": "审核",
+            "operationTypeCode": "M6-003",
+            "actionYWType": "冲正",
+            "businessTypeCode": "correctNo",
+            "params": [
+                "status",
+                "recTypeName"
+            ],
+            "actionDetail": "{recTypeName}：{status}（同意：1,不同意:2）"
+        },
+        {
+            "actionType": "批单补录",
+            "operationTypeCode": "M7-001",
+            "actionYWType": "批单",
+            "businessTypeCode": "endorsementsNo",
+            "params": [
+                "endorsementsNo",
+                "endorsementsType"
+            ],
+            "actionDetail": "{endorsementsType}：{endorsementsNo}"
+        },
+        {
+            "actionType": "到账确认-批单",
+            "operationTypeCode": "M7-002",
+            "actionYWType": "批单",
+            "businessTypeCode": "endorsementsNo",
+            "params": [],
+            "actionDetail": "应收{保费}，实收{保费}"
+        },
+        {
+            "actionType": "批单上传",
+            "operationTypeCode": "M7-003",
+            "actionYWType": "批单",
+            "businessTypeCode": "endorsementsNo",
+            "params": [
+                "endorsementsNo"
+            ],
+            "actionDetail": "上传批单{endorsementsNo}"
+        },
+        {
+            "actionType": "导出批单",
+            "operationTypeCode": "M7-005",
+            "actionYWType": "批单",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出批单清单，共计{total}记录。"
+        },
+        {
+            "actionType": "预录",
+            "operationTypeCode": "M8-001",
+            "actionYWType": "投保单",
+            "businessTypeCode": "",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName|branchName}：导出批单清单，共计{total}记录。"
+        },
+        {
+            "actionType": "审核",
+            "operationTypeCode": "M8-002",
+            "actionYWType": "投保单",
+            "businessTypeCode": "applicationFormCode",
+            "params": [
+                "beforePerm",
+                "afterPerm"
+            ],
+            "actionDetail": "将投保单金额由{beforePerm}，改为{afterPerm}"
+        },
+        {
+            "actionType": "批量导入",
+            "operationTypeCode": "M9-001",
+            "actionYWType": "全面营销",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "total",
+                "recordMsg"
+            ],
+            "actionDetail": "共计{total}记录，{recordMsg}"
+        },
+        {
+            "actionType": "佣金明细导出",
+            "operationTypeCode": "M9-002",
+            "actionYWType": "全面营销",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "userName",
+                "branchName",
+                "total"
+            ],
+            "actionDetail": "{userName}|{branchName}：导出佣金明细清单，共计{total}记录。"
+        },
+        {
+            "actionType": "刷新佣金明细",
+            "operationTypeCode": "M9-003",
+            "actionYWType": "全面营销",
+            "businessTypeCode": "loginAccount",
+            "params": [
+                "total",
+                "recordMsg"
+            ],
+            "actionDetail": "共计{total}记录，{recordMsg}"
+        },
+        {
+            "actionType": "修改佣金比例",
+            "operationTypeCode": "M9-004",
+            "actionYWType": "全面营销",
+            "businessTypeCode": "polNoOREnNO",
+            "params": [
+                "beforePerm",
+                "afterPerm",
+                "polNoOREnNO"
+            ],
+            "actionDetail": "修改前：{beforePerm}，修改后：{afterPerm}"
+        },
+        {
+            "actionType": "删除佣金明细",
+            "operationTypeCode": "M9-005",
+            "actionYWType": "全面营销",
+            "businessTypeCode": "polNoOREnNO",
+            "params": [
+                "recordMsg",
+                "polNoOREnNO"
+            ],
+            "actionDetail": "删除{recordMsg}"
+        }
+    ]
+}

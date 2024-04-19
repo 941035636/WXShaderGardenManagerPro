@@ -3,36 +3,35 @@
     title="查看隐患详情"
     :visible.sync="dialogVisible"
     :close-on-click-modal="false"
-    append-to-body
     width="50%"
   >
     <el-timeline>
-      <el-timeline-item :timestamp="data.createTime | setTime" placement="top">
+      <el-timeline-item :timestamp="data.createTime | format" placement="top">
         <div>
           <Table :box-two="true" lable-left="隐患等级">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span class="color-red">
                 {{ data.level === 1 ? '一般' : '重大' }}
               </span>
             </template>
           </Table>
           <Table :box-two="true" lable-left="检查日期">
-            <template #rightTwo>
-              <span>{{ data.checkDate | setTime }}</span>
+            <template slot="rightTwo">
+              <span>{{ data.checkDate | format("YYYY-MM-DD") }}</span>
             </template>
           </Table>
           <Table :box-two="true" lable-left="隐患描述">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span>{{ data.remark }}</span>
             </template>
           </Table>
           <Table :box-two="true" lable-left="判断依据">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span>{{ data.foundation }}</span>
             </template>
           </Table>
           <Table :box-two="true" lable-left="整改建议">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span>{{ data.advice }}</span>
             </template>
           </Table>
@@ -43,12 +42,13 @@
             lable-right=""
             value-right=""
           >
-            <template #rightTwo>
+            <template slot="rightTwo">
               <div class="display-flex">
                 <div
                   v-for="(v1, key1) in imgUrlList"
                   :key="key1"
                   class="danger-img-box"
+                  @click="enlargeImg(v1)"
                 >
                   <img :src="v1" />
                 </div>
@@ -60,12 +60,12 @@
       <el-timeline-item
         v-for="(item, key) in list"
         :key="key"
-        :timestamp="item.accidentPreRecheckEntity.createTime | setTime"
+        :timestamp="item.accidentPreRecheckEntity.createTime | format"
         placement="top"
       >
         <div>
           <Table :box-two="true" lable-left="整改状态">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span class="color-green">
                 {{
                   item.accidentPreRecheckEntity.rectificationStatus === 2
@@ -76,14 +76,14 @@
             </template>
           </Table>
           <Table :box-two="true" lable-left="复查日期">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span>
-                {{ item.accidentPreRecheckEntity.reviewDate | setTime }}
+                {{ item.accidentPreRecheckEntity.reviewDate | format("YYYY-MM-DD") }}
               </span>
             </template>
           </Table>
           <Table :box-two="true" lable-left="复查描述">
-            <template #rightTwo>
+            <template slot="rightTwo">
               <span>{{ item.accidentPreRecheckEntity.reviewResult }}</span>
             </template>
           </Table>
@@ -94,12 +94,13 @@
             lable-right=""
             value-right=""
           >
-            <template #rightTwo>
+            <template slot="rightTwo">
               <div class="display-flex">
                 <div
                   v-for="(v1, key1) in item.imgUrl"
                   :key="key1"
                   class="danger-img-box"
+                  @click="enlargeImg(v1)"
                 >
                   <img :src="v1" />
                 </div>
@@ -109,79 +110,96 @@
         </div>
       </el-timeline-item>
     </el-timeline>
+    <ImgDialog ref="ImgDialog" />
   </el-dialog>
 </template>
 
 <script>
-import { getDanger } from '@/api/accidentManagement'
-import { getImgFile } from '@/api/resources'
-import Table from './table'
-export default {
-  name: 'AddOrAlter',
-  components: {
-    Table,
-  },
-  props: {},
-  data() {
-    return {
-      dialogVisible: false,
-      data: {},
-      list: [],
-      imgUrlList: [],
-    }
-  },
-  computed: {},
-  mounted() {
-    // this.initRole()
-  },
-  methods: {
-    async initData(val) {
-      this.dialogVisible = true
-      this.getDanger(val)
-      this.data = val
-      let imgUrlList = []
-      for (let key of this.data.url) {
-        let data = await this.getImgFile(key)
-        imgUrlList.push(data)
-      }
-      this.imgUrlList = imgUrlList
+  import { getDanger } from '@/service/accidentManagement'
+  import ResourcesService from '@/service/ResourcesService'
+  import Table from './table'
+  import ImgDialog from '@/components/ImgDialog'
+  export default {
+    name: 'dangerDetails',
+    components: {
+      Table,
+      ImgDialog,
     },
-    async getDanger(val) {
-      let res = await getDanger(val.id)
-      if (res.code === '0000') {
-        res.data.dangerRecheckResp.forEach((item) => {
-          item.imgUrl = []
-          if (item.url) {
-            item.url.forEach(async (v1) => {
-              let imgUrl = await this.getImgFile2(v1)
-              item.imgUrl.push(imgUrl)
-            })
+    props: {},
+    data() {
+      return {
+        ResourcesService: new ResourcesService(),
+        dialogVisible: false,
+        data: {},
+        list: [],
+        imgUrlList: [],
+      }
+    },
+    computed: {},
+    mounted() {
+      // this.initRole()
+    },
+    methods: {
+      async initData(val) {
+        console.log(val,'------');
+        this.dialogVisible = true
+        this.getDanger(val)
+        this.data = val
+        let imgUrlList = []
+        try{
+          for (let key of this.data.url) {
+            let {url} = await this.ResourcesService.downloadOrViewFile(key)
+            imgUrlList.push(url)
           }
-        })
-        this.list = res.data.dangerRecheckResp
-      } else {
-        this.list = []
-      }
+          this.imgUrlList = imgUrlList
+        }catch(e){
+          console.log(e);
+        }
+        
+      },
+      async getDanger(val) {
+        let res = await getDanger(val.id)
+        if (res.code === '0000') {
+          res.data.dangerRecheckResp.forEach((item) => {
+            item.imgUrl = []
+            try{
+              item.url.forEach(async (v1) => {
+                let imgUrl = await this.getImgFile(v1)
+                item.imgUrl.push(imgUrl)
+              })
+            }catch(e){
+              console.log(e);
+            }
+          })
+          this.list = res.data.dangerRecheckResp
+        } else {
+          this.list = []
+        }
+      },
+      async getImgFile(url) {
+        let res = await this.ResourcesService.downloadOrViewFile(url)
+        return res.url
+      },
+      enlargeImg(src) {
+        this.$refs.ImgDialog.open(src)
+      },
     },
-    async getImgFile(url) {
-      let res = await getImgFile(url.url)
-      return res.data
-    },
-    async getImgFile2(url) {
-      let res = await getImgFile(url)
-      return res.data
-    },
-  },
-}
+  }
 </script>
 
-<style lang="scss" scoped>
-.danger-img-box {
-  width: 100px;
-  height: 100px;
-  img {
-    width: 100%;
-    height: 100%;
+<style lang="less" scoped>
+  .danger-img-box {
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+    margin-top: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
-}
+  .display-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
 </style>

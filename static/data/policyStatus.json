@@ -1,0 +1,123 @@
+{
+    "data": [{
+            "value": "1",
+            "state": "01",
+            "label": "待付款"
+        },
+        {
+            "value": "2",
+            "state": "02",
+            "label": "待出单"
+        },
+        {
+            "value": "3",
+            "state": "06",
+            "label": "已出单"
+        },
+        {
+            "value": "4",
+            "state": "03",
+            "label": "保障中"
+        },
+        {
+            "value": "5",
+            "state": "04",
+            "label": "可续保"
+        },
+        {
+            "value": "6",
+            "state": "05",
+            "label": "已失效"
+        },
+        {
+            "value": "7",
+            "state": "07",
+            "label": "已取消"
+        },
+        {
+            "value": "8",
+            "state": "08",
+            "label": "出单失败"
+        }
+    ],
+    "dataAll": [
+        {
+            "value": "",
+            "state": "",
+            "label": "全部"
+        },
+        {
+            "value": "1",
+            "state": "01",
+            "label": "待付款"
+        },
+        {
+            "value": "2",
+            "state": "02",
+            "label": "待出单"
+        },
+        {
+            "value": "3",
+            "state": "06",
+            "label": "已出单"
+        },
+        {
+            "value": "4",
+            "state": "03",
+            "label": "保障中"
+        },
+        {
+            "value": "5",
+            "state": "04",
+            "label": "可续保"
+        },
+        {
+            "value": "6",
+            "state": "05",
+            "label": "已失效"
+        },
+        {
+            "value": "7",
+            "state": "07",
+            "label": "已取消"
+        },
+        {
+            "value": "8",
+            "state": "08",
+            "label": "出单失败"
+        }
+    ],
+    "medData":[
+        {
+            "value": "1",
+            "applicationStatus": "07",
+            "label": "待关联"
+        },
+        {
+            "value": "2",
+            "applicationStatus": "08",
+            "label": "待出单"
+        },
+        {
+            "value": "3",
+            "applicationStatus": "09",
+            "label": "出单失败"
+        },
+        {
+            "value": "4",
+            "applicationStatus": "10",
+            "label": "已出单"
+        },
+        {
+            "value": "5",
+            "applicationStatus": "11",
+            "label": "已取消"
+        },
+        {
+            "value": "6",
+            "applicationStatus": "12",
+            "label": "已删除"
+        }
+    ]
+
+}

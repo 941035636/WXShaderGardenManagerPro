@@ -1,7 +1,6 @@
 <template>
   <div id="title" :style="{ 'border-bottom': borderTitleStyle }">
     <p
-      class="leftBoder"
       :style="{ 'border-left': borderStyle, 'border-radius': borderRadius }"
     ></p>
     <p class="text">{{ title }}</p>
@@ -28,94 +27,94 @@
 </template>
 
 <script>
-export default {
-  name: 'Title',
-  props: {
-    borderStyle: {
-      type: String,
-      required: false,
-      default: () => {
-        return '6px solid #096dd9'
+  export default {
+    name: 'Title',
+    props: {
+      borderStyle: {
+        type: String,
+        required: false,
+        default: () => {
+          return '6px solid #FFC069'
+        },
+      },
+      borderRadius: {
+        type: String,
+        required: false,
+        default: () => {
+          return '0px'
+        },
+      },
+      borderTitleStyle: {
+        type: String,
+        required: false,
+        default: () => {
+          return '1px solid #ccc'
+          return ''
+        },
+      },
+      title: {
+        type: String,
+        required: false,
+        default: () => {
+          return '无'
+        },
+      },
+      buttonLeft: {
+        type: Object,
+        required: false,
+        default: () => {
+          return {
+            type: '',
+            flag: false,
+            text: '无',
+            emit: '',
+          }
+        },
+      },
+      buttonRight: {
+        type: Object,
+        required: false,
+        default: () => {
+          return {
+            type: '',
+            flag: false,
+            text: '无',
+            emit: '',
+          }
+        },
       },
     },
-    borderRadius: {
-      type: String,
-      required: false,
-      default: () => {
-        return '0px'
+    methods: {
+      buttonClick(emit) {
+        this.$emit(emit)
       },
     },
-    borderTitleStyle: {
-      type: String,
-      required: false,
-      default: () => {
-        return '1px solid #e9e9e9'
-      },
-    },
-    title: {
-      type: String,
-      required: false,
-      default: () => {
-        return '无'
-      },
-    },
-    buttonLeft: {
-      type: Object,
-      required: false,
-      default: () => {
-        return {
-          type: '',
-          flag: false,
-          text: '无',
-          emit: '',
-        }
-      },
-    },
-    buttonRight: {
-      type: Object,
-      required: false,
-      default: () => {
-        return {
-          type: '',
-          flag: false,
-          text: '无',
-          emit: '',
-        }
-      },
-    },
-  },
-  methods: {
-    buttonClick(emit) {
-      this.$emit(emit)
-    },
-  },
-}
+  }
 </script>
 
-<style lang="scss" scoped>
-#title {
-  display: flex;
-  align-items: center;
-  position: relative;
-  margin-bottom: 20px;
-  .leftBoder {
-    height: 20px;
+<style lang="less" scoped>
+  #title {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+    p {
+      height: 30px;
+      line-height: 30px;
+      margin: 18px;
+    }
+    .text {
+      margin-left: 20px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #101010;
+    }
+    .btn {
+      position: absolute;
+      right: 0;
+    }
+    .button {
+      height: 40px;
+    }
   }
-  p {
-    height: 30px;
-    line-height: 30px;
-  }
-  .text {
-    margin-left: 20px;
-    font-size: 14px;
-    color: #096dd9;
-  }
-  .btn {
-    position: absolute;
-    right: 0;
-  }
-  .button {
-    height: 34px;
-  }
-}
 </style>

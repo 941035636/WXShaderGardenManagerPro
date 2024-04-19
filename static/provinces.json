@@ -1,0 +1,68 @@
+{ 
+    "500000":[
+    {
+        "area": "重庆市", 
+        "areaCode": 500000, 
+        "type": 1, 
+        "id": null, 
+        "rate": null
+    }, 
+    {
+        "area": "重庆市", 
+        "areaCode": 500100, 
+        "Acode": 500000, 
+        "type": 2, 
+        "id": null, 
+        "rate":null
+    }, 
+    {
+        "area": "万州区", 
+        "areaCode": "500101", 
+        "Acode": 500100, 
+        "type": 3, 
+        "id": null, 
+        "rate":null
+    }, 
+    {
+        "area": "涪陵区", 
+        "areaCode": "500102", 
+        "Acode": 500100, 
+        "type": 3, 
+        "id": null, 
+        "rate": null
+    }
+    
+],   
+"510000":[
+    {
+        "area": "四川省", 
+        "areaCode": 510000, 
+        "type": 1, 
+        "id": null, 
+        "rate": null
+    },
+    {
+        "area": "成都市", 
+        "areaCode": "510100", 
+        "type": 2, 
+        "id": null, 
+        "rate": null
+    },
+    {
+        "area": "市辖区", 
+        "areaCode": "510101", 
+        "type": 3, 
+        "Acode": 510100, 
+        "id": null, 
+        "rate": null
+    },
+    {
+        "area": "锦江区", 
+        "areaCode": "510102", 
+        "type": 3, 
+        "Acode": 510100, 
+        "id": null, 
+        "rate": null
+    }
+  ]
+}  

@@ -1,72 +1,77 @@
 <template>
   <div id="serviceSummaryType1">
     <Title title="服务总结"></Title>
-    <div class="mb10 mt10 display-flex">
+    <div class="mb10 mt10">
       <el-form
         ref="ruleForm"
         :model="ruleForm"
         :rules="rules"
-        label-width="200px"
+        label-width="150px"
       >
-        <el-form-item label="服务形式" prop="serviceType">
-          <el-radio-group v-model="ruleForm.serviceType">
-            <el-radio :label="2">线下</el-radio>
-            <el-radio :label="1">线上</el-radio>
-          </el-radio-group>
-        </el-form-item>
-         
-        <el-form-item prop="enterpriseParams" label="服务企业清单">
-               
-          <el-button
-            size="mini"
-            v-if="ruleForm.isEnterprises"
-            @click="uploadfile"
-            plain
-          >
-            上传清单
-          </el-button>
-             
-          <span
-            class="ml10"
-            v-if="ruleForm.enterpriseParams && ruleForm.enterpriseParams.length"
-          >
-                共{{ ruleForm.enterpriseParams.length }}家企业，
-            <el-button @click="openEnterPrise" type="text" class="ckBtn">
-              点击查看
-            </el-button>
-                   
-          </span>
-               
-        </el-form-item>
-             
-        <el-form-item label="参加人员数量">
-                 
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="线上/线下" prop="offline">
+              <div class="custom-button">
+                <p :class="{'active-p':ruleForm.offline === false}" @click="ruleForm.offline=false">线上</p>
+                <p :class="{'active-p':ruleForm.offline === true,'ml15':true}" @click="ruleForm.offline=true">线下</p>
+              </div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="服务实施日期" prop="implementationTime">
+              <el-date-picker
+                v-model="ruleForm.implementationTime"
+                class="w280"
+                size="small"
+                type="date"
+                value-format="yyyy-MM-dd"
+                :picker-options="dealDateStartOptions"
+                placeholder="选择日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="服务企业数量" prop="corpNum">
+              <el-input
+                v-model.trim="ruleForm.corpNum"
+                class="w280"
+                size="small"
+                placeholder="请输入参加企业数量"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10">
+            <el-form-item label="参加人数" prop="personNum">
+              <el-input
+                v-model.trim="ruleForm.personNum"
+                class="w280"
+                size="small"
+                placeholder="请输入参加人数"
+              ></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-form-item label="服务情况说明" prop="checkRemark">
           <el-input
-            maxlength="9"
-            v-model.number="ruleForm.personNum"
-            class="w300"
-            size="small"
-          >
-                     
-            <template slot="append">人</template>
-                   
-          </el-input>
-               
-        </el-form-item>
-
+            v-model="ruleForm.checkRemark"
+            class="w500"
+            type="textarea"
+            placeholder="请输入服务计划说明"
+          ></el-input>
+        </el-form-item> -->
         <el-form-item label="服务照片">
           <el-upload
+            action="#"
             list-type="picture-card"
+            :auto-upload="false"
             :file-list="fileList"
-            :action="this.baseURL + `/files/v1/upload/file`"
-            name="file"
-            :headers="headers"
+            multiple
             :limit="9"
-            :on-change="handleEditChange"
-            :class="{ hide: hideUploadBtn }"
-            :data="upLoadData"
-            :on-success="handleAvatarSuccess"
+            :http-request="Upload"
             :before-upload="beforeAvatarUpload"
+            :on-change="fileChange"
             :on-remove="fileRemove"
             accept=".jpg, .jpeg, .png, PNG"
             :on-exceed="onExceed"
@@ -74,187 +79,302 @@
             <i class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
+        <div class="text-center mb20">
+          <el-button @click="toThisTag" round>取 消</el-button>
+          <el-button type="warning" @click="register" round>确认提交</el-button>
+        </div>
       </el-form>
     </div>
-    <import-company @getMsg="getMsg" ref="importCompany" />
   </div>
 </template>
 
 <script>
-import Title from '@/components/Title'
-import { baseURL } from '@/config'
-
-import store from '@/store'
-import { addAssessmenSummary } from '@/api/accidentManagement'
-import {
-  validatePersonNum,
-  validateName,
-  validatePhone,
-  validateRemark,
-} from '@/utils/validateFrom'
-import { mapGetters } from 'vuex'
-import { validateNumMinOrMax } from '@/utils/validateFrom'
-import ImportCompany from '../../components/importCompany.vue'
-export default {
-  name: 'serviceSummaryType1',
-  components: {
-    Title,
-    ImportCompany,
-  },
-  filters: {},
-  props: {},
-  data() {
-    return {
-      hideUploadBtn: false,
-      data: {},
-      headers: {
-        authorization: store.getters['user/accessToken'],
-      },
-      baseURL: baseURL,
-      upLoadData: {},
-      fileList: [],
-      ruleForm: {
-        enterpriseParams: [],
-        serviceType: null,
-        personNum: '',
-        files: [],
-      },
-      rules: {
-        serviceType: [
-          {
-            required: true,
-            message: '请选择服务形式',
-            trigger: 'blur',
-          },
-        ],
-        enterpriseParams: [
-          {
-            required: true,
-            message: '请上传文件',
-            trigger: 'blur',
-          },
-        ],
-      },
-    }
-  },
-  computed: {
-    ...mapGetters({
-      getEnumAll: 'getEnumAll',
-    }),
-  },
-  mounted() {},
-  methods: {
-    handleEditChange(file, fileList) {
-      this.hideUploadBtn = fileList.length >= 9
+  import Title from '@/components/Title'
+  import { addTrainSummary } from '@/service/accidentManagement'
+  import { dateTest, isNum } from '@/util/validate'
+  import { validateBigNum } from '@/util/validateFrom'
+  import { mapGetters } from 'vuex'
+  import moment from 'moment'
+  export default {
+    name: 'ServiceReport',
+    components: {
+      Title,
     },
-    openEnterPrise() {
-      this.$refs.importCompany.dialogVisible = true
-      this.$refs.importCompany.activeName = '1'
-      this.$refs.importCompany.isEnterprises = this.ruleForm.isEnterprises
-      let enterpriseParamss = JSON.parse(
-        JSON.stringify(this.ruleForm.enterpriseParams)
-      )
-      this.$refs.importCompany.tableData = enterpriseParamss
-    },
-    getMsg(data) {
-      this.$set(this.ruleForm, 'enterpriseParams', data)
-      // this.ruleForm.enterpriseParams = data
-    },
-    uploadfile() {
-      this.$refs.importCompany.dialogVisible = true
-    },
-    async configRegister() {
-      let data = {}
-      data.fileIds = this.fileList.map((item) => {
-        return item.id
-      })
-      data.enterpriseParams = JSON.stringify(this.ruleForm.enterpriseParams)
-      data.planStatus = this.ruleForm.planStatus
-      data.serviceType = this.ruleForm.serviceType
-      data.personNum = this.ruleForm.personNum
-      data.id = this.$route.query.id
-
-      let res = await addAssessmenSummary(data, this.$route.query.id)
-      if (res.code === '0000') {
-        this.$emit('getMsg', '')
-      }
-    },
-    register(e) {
-      this.ruleForm.planStatus = e
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          this.configRegister()
-        } else {
-          return false
+    filters: {},
+    props: {
+      planDetail:{
+        type:Object,
+        required:true,
+        default:()=>{
+          return {}
         }
-      })
+      },
     },
-    handleSelect(item) {
-      this.ruleForm.corporationCode = item.blCode
+    data() {
+      let validateBigNum1 = function(rule, value, callback) {
+        // 输入 8--，value 为 8
+        // 估计这里内部使用了 parseInt() / parseFloat()
+        let num = value -0
+        // if (!isNum(num) || num < 0 || num > 1000000000 ) {
+          // callback(new Error('支出金额必须大于等于0个字符小于10亿!'))
+        if (value == '' || (isNum(num) && num > 0 && num <= 1000000000)) {
+          callback()
+        } else {
+          callback(new Error('正整数，最大10亿!'))
+        }
+      }
+      return {
+        data: {},
+        activeName: 'first',
+        dealDateStartOptions: this.beginDate(),
+        tableList: [{}],
+        fileList: [],
+        ruleForm: {
+          id: '', // 计划id
+          implementationTime: '', // 检查日期
+          checkRemark: '', // 备注
+          personNum: '', // 培训人员数量
+          corpNum: '', // 培训公司数量
+          files: '', // 文件
+          offline:false,
+        },
+        rules: {
+          implementationTime: [
+            { required: true, message: '请选择检查日期', trigger: 'change' },
+          ],
+          checkRemark: [
+            { required: true, message: '服务情况说明', trigger: 'blur' },
+          ],
+          corpNum: [
+            { required: true, message: '请输入参加企业数量', trigger: 'blur' },
+            { required: true, validator: validateBigNum, trigger: 'blur' },
+            
+            {
+              pattern: /^[+]{0,1}(\d+)$/,
+              message: '请输入正确的企业数量',
+            },
+          ],
+          personNum: [
+            // { required: true, message: '请输入参加培训人数', trigger: 'blur' },
+            {validator: validateBigNum1, trigger: 'blur' },
+            // {
+            //   pattern: /^[+]{0,1}(\d+)$/,
+            //   message: '请输入正确的培训人数',
+            // },
+          ],
+          foundation: [
+            { required: true, message: '请输入判断依据', trigger: 'blur' },
+          ],
+          advice: [
+            { required: true, message: '请输入整改建议', trigger: 'blur' },
+          ],
+          files: [
+            { required: true, message: '请上传隐患照片', trigger: 'blur' },
+          ],
+        },
+      }
     },
-
-    handleAvatarSuccess(res, file) {
-      if (res.code == '0000') {
-        this.fileList.push({
-          uid: file.uid,
-          url: URL.createObjectURL(file.raw),
-          id: res.data.id,
+    computed: {
+      ...mapGetters({
+        getEnumAll: 'getEnumAll',
+      }),
+      getTitle() {
+        let objName =
+          this.getEnumAll.AccidentTypeEnum[this.$route.query.preType]
+        let name = `服务总结（${objName}）`
+        return name
+      },
+    },
+    mounted() {},
+    methods: {
+      async initData(val) {
+        this.dialogVisible = true
+      },
+      getRowClass({ row, column, rowIndex, columnIndex }) {
+        if (rowIndex == 0) {
+          return 'background:#f5f5f5'
+        } else {
+          return ''
+        }
+      },
+      async querySearchOrg(queryString, cb) {
+        if (!queryString) {
+          cb([])
+        } else {
+          let form = {
+            pn: 1,
+            ps: 10,
+            beginCreateTime: '',
+            endCreateTime: '',
+            custFullName: queryString,
+            status: '1',
+            type: '',
+            bl: '',
+            userAccount: '',
+          }
+          let res = await getOrgList(form)
+          if (res.code == '0000') {
+            let list = res.list.map((item) => {
+              let obj = {
+                value: item.custFullName,
+                blCode: item.blCode,
+              }
+              return obj
+            })
+            cb(list)
+          } else {
+            cb([{ value: '失败' }])
+          }
+        }
+      },
+      clear() {
+        this.$nextTick(() => {
+          this.$refs['ruleForm'].resetFields()
         })
-      }
+        this.ruleForm.id = ''
+        console.log(this.ruleForm)
+      },
+      close() {
+        this.clear()
+      },
+      async configRegister() {
+        let data = JSON.parse(JSON.stringify(this.ruleForm))
+        if (dateTest(this.ruleForm.implementationTime, this.planDetail.endTime)) {
+          this.$message.error('服务实施日期不在服务时间内')
+          return
+        }
+        data.implementationTime = `${data.implementationTime} 00:00:00`
+        let formData = new FormData()
+        for (let key in data) {
+          if (key === 'files') {
+            this.fileList.forEach((item=>{
+              formData.append('files', item.raw)
+            }))
+          } else {
+            formData.append(key, data[key])
+          }
+        }
+        let res = await addTrainSummary(formData, this.$route.query.id)
+        if (res.code === '0000') {
+          this.$message.success('成功')
+          this.toThisTag()
+        }
+      },
+      register() {
+        this.$refs['ruleForm'].validate((valid) => {
+          if (valid) {
+            this.configRegister()
+          } else {
+            return false
+          }
+        })
+      },
+      handleSelect(item) {
+        console.log(item)
+        this.ruleForm.corporationCode = item.blCode
+      },
+      handleSelectionChange(val) {
+        this.ruleForm.experts = val.map((item) => {
+          let obj = {
+            name: item.name,
+            specialty: item.specialty,
+          }
+          return obj
+        })
+      },
+      // 图片上传
+      async Upload(file) {
+        this.ruleForm.files = file
+        const formData = new FormData()
+        formData.append('files', file.file)
+        console.log(formData)
+      },
+      beforeAvatarUpload(file) {
+        const isLt10M = file.size / 1024 / 1024 < 10
+        if (!isLt10M) {
+          this.$message.error('单文件上限10MB!')
+        }
+        return isLt10M
+      },
+      // 点击上传按钮触发数据
+      fileChange(file, fileList) {
+        const isLt10M = file.size / 1024 / 1024 < 10
+        if (!isLt10M) {
+          this.fileList = fileList.filter(f=>f.name !== file.name);
+          this.$message({ message: "单文件上限10MB!", type: "error" });
+          return false;
+        } else {
+          this.fileList = fileList;
+        }
+      },
+      //检测文件删除
+      fileRemove(file, fileList) {
+        this.fileList = fileList;
+      },
+      onExceed() {
+        // this.$message.warning('最多支持10个附件')
+      },
+      // 设置路由
+      async toThisTag() {
+        this.$router.go(-1)
+      },
+      beginDate() {
+        let self = this
+        return {
+          disabledDate(time) {
+            let startDate = self.planDetail.startTime
+              ? moment(self.planDetail.startTime).subtract(1,'d').format('YYYY-MM-DD')
+              : new Date()
+            return time.getTime() < new Date(startDate)
+          },
+        }
+      },
     },
-
-    beforeAvatarUpload(file) {
-      const isLt10M = file.size / 1024 / 1024 < 20
-      if (!isLt10M) {
-        this.$message.error('单文件上限20MB!')
-      }
-      return isLt10M
-    },
-    onExceed() {},
-
-    //检测文件删除
-    fileRemove(file, fileList) {
-      console.log(file)
-      this.fileList = this.fileList.filter((item) => {
-        return item.uid != file.uid
-      })
-      console.log(this.fileList, 'afterDelete')
-      this.fileList = fileList
-      this.hideUploadBtn = fileList.length >= 9
-    },
-  },
-}
+  }
 </script>
 
-<style scoped lang="scss">
-#serviceSummaryType1 {
-  margin: 0px 20px;
-  .upload-demo {
-    .upload-btn {
-      width: 100px;
+<style scoped lang="less">
+  #serviceSummaryType1 {
+    margin: 0px 20px 20px;
+    .upload-demo {
+      .upload-btn {
+        width: 100px;
+      }
+    }
+    .project-type {
+      display: inline-block;
+      padding: 2px 10px;
+      background-color: #e6f7ff;
+      color: #096dd9;
+      border-radius: 20px;
+    }
+    .custom-button {
+      display: flex;
+      p {
+        margin-top: 5px;
+        width: 50px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        border: 1px solid #A4ADB3;
+        border-radius: 4px;
+        color: #fff;
+        background-color: #A4ADB3;
+        cursor: pointer;
+      }
+      .active-p {
+        background-color: #FFA940;
+        border: 1px solid #FFA940;
+      }
     }
   }
-  .project-type {
-    display: inline-block;
-    padding: 2px 10px;
-    background-color: #e6f7ff;
-    color: #096dd9;
-    border-radius: 20px;
-  }
-}
 </style>
-<style lang="scss">
+<style lang="less">
 #serviceSummaryType1 {
   .avatar-uploader-icon {
     width: 140px;
     height: 140px;
     line-height: 140px;
-  }
-}
-// 隐藏上传组件
-.hide {
-  .el-upload--picture-card {
-    display: none !important;
   }
 }
 </style>

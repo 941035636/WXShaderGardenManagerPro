@@ -30,7 +30,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .step-style {
     border: 1px solid #ececec;
     background-color: #fff;

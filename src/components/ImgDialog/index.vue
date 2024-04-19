@@ -33,7 +33,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .enlarge-img {
     width: 560px;
     height: 580px;

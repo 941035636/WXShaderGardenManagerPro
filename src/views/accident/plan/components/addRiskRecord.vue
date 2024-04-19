@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     id="addRiskRecord"
-    :title="ruleForm.id ? '修改风险记录' : '添加风险记录'"
+    :title="ruleForm.id?'修改风险记录':'添加风险记录'"
     :visible.sync="dialogVisible"
     :close-on-click-modal="false"
     width="50%"
@@ -13,17 +13,6 @@
       :rules="rules"
       label-width="200px"
     >
-      <el-form-item label="辨识日期" prop="checkDate">
-        <el-date-picker
-          v-model="ruleForm.checkDate"
-          class="w280"
-          size="small"
-          :picker-options="timeRange"
-          type="date"
-          value-format="yyyy-MM-dd"
-          placeholder="选择辨识日期"
-        ></el-date-picker>
-      </el-form-item>
       <el-form-item label="风险源" prop="remark">
         <el-input
           v-model.trim="ruleForm.remark"
@@ -34,335 +23,319 @@
         ></el-input>
       </el-form-item>
       <el-form-item label="风险等级" prop="level">
-        <el-radio-group v-model="ruleForm.level">
-          <el-radio
+        <el-select
+          v-model="ruleForm.level"
+          class="w280"
+          placeholder="请选择风险等级"
+        >
+          <el-option
             v-for="item in typeData"
             :key="item.code"
-            :label="item.code"
+            :label="item.label"
             :value="item.code"
-          >
-            {{ item.label }}
-          </el-radio>
-        </el-radio-group>
+          ></el-option>
+        </el-select>
       </el-form-item>
-
-      <el-form-item label="依据" prop="foundation">
+      <el-form-item label="辨识日期" prop="checkDate">
+        <el-date-picker
+          v-model="ruleForm.checkDate"
+          class="w280"
+          size="small"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择辨识日期"
+        ></el-date-picker>
+      </el-form-item>
+      
+      <el-form-item label="具体描述" prop="foundation">
         <el-input
           v-model.trim="ruleForm.foundation"
           class="w500"
           size="small"
           type="textarea"
-          placeholder="请输入依据"
+          placeholder="请输入具体描述"
         ></el-input>
       </el-form-item>
-      <el-form-item label="防范措施" prop="advice">
+      <el-form-item label="管控措施建议" prop="advice">
         <el-input
           v-model.trim="ruleForm.advice"
           class="w500"
           size="small"
           type="textarea"
-          placeholder="请输入防范措施"
+          placeholder="请输入管控措施建议"
         ></el-input>
       </el-form-item>
-      <el-form-item label="现场照片">
+      <el-form-item label="风险照片">
         <el-upload
-          list-type="picture-card"
-          :file-list="fileList"
-          :action="this.baseURL + `/files/v1/upload/file`"
-          name="file"
-          :headers="headers"
-          :limit="9"
-          :data="upLoadData"
+          class="avatar-uploader"
+          action="#"
+          :http-request="Upload"
           :on-success="handleAvatarSuccess"
+          multiple
+          :show-file-list="false"
+          :limit="9"
           :before-upload="beforeAvatarUpload"
-          :on-remove="fileRemove"
           accept=".jpg, .jpeg, .png, PNG"
           :on-exceed="onExceed"
         >
-          <i class="el-icon-plus avatar-uploader-icon"></i>
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="clear2">取 消</el-button>
+      <el-button @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="register">确 定</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import { addDanger } from '@/api/accidentManagement'
-import { updateDanger } from '@/api/accidentManagement'
-import { baseURL } from '@/config'
-import store from '@/store'
-import { getImgFile } from '@/api/resources'
-import { mapGetters } from 'vuex'
-export default {
-  name: 'AddOrAlter',
-  props: {},
-  data() {
-    return {
-      dialogVisible: false,
-      dealDateStartOptions: this.beginDate(),
-      typeData: [],
-      fileList: [],
-      headers: {
-        authorization: store.getters['user/accessToken'],
-      },
-      baseURL: baseURL,
-      upLoadData: {},
-      ruleForm: {
-        accidentPreProjectId: '', // 合同id
-        accidentPrePlanId: '', // 计划id
-        level: null, // 风险等级
-        checkDate: '', // 检查日期
-        remark: '', // 风险源
-        foundation: '', // 判断
-        advice: '', // 建议
-        files: '', // 文件
-        danger: false, // 风险记录False，隐患排查为true
-      },
-      imageUrl: '',
-      rules: {
-        level: [
-          { required: true, message: '请选择风险等级', trigger: 'change' },
-        ],
-        checkDate: [
-          { required: true, message: '请选择辨识日期', trigger: 'change' },
-        ],
-        remark: [
-          { required: true, message: '请输入风险源', trigger: 'blur' },
-          {
-            min: 2,
-            max: 200,
-            message: '字符2-200位',
-          },
-        ],
-        foundation: [
-          { required: false, message: '请输入依据', trigger: 'blur' },
-          {
-            min: 2,
-            max: 200,
-            message: '字符2-200位',
-          },
-        ],
-        advice: [
-          { required: false, message: '请输入防范措施', trigger: 'blur' },
-          {
-            min: 2,
-            max: 200,
-            message: '字符2-200位',
-          },
-        ],
-        files: [{ required: true, message: '请上传照片', trigger: 'blur' }],
-      },
-      startTime: '',
-      endTime: '',
-      timeRange: {
-        disabledDate: (time) => {
-          return (
-            time.getTime() >
-              new Date(localStorage.getItem('accidentendTime')).getTime() ||
-            time.getTime() <
-              new Date(localStorage.getItem('accidentstartTime')).getTime()
-          )
-        },
-      },
-    }
-  },
-  computed: {
-    ...mapGetters({
-      enumObj: 'enums/getStrEnumAll',
-    }),
-  },
-  mounted() {},
-  methods: {
-    clear2() {
-      this.$emit('successCb')
-      this.clear()
-      this.dialogVisible = false
-    },
-    async initData(val, dangerDetails) {
-      console.log(val, dangerDetails)
-      this.startTime = val.startTime || ''
-      this.endTime = val.endTime || ''
-
-      this.typeData = this.currentEnum()
-      if (dangerDetails) {
-        for (let key in this.ruleForm) {
-          if (key === 'level') {
-            this.ruleForm[key] = dangerDetails[key]
-          } else if (key === 'checkDate') {
-            this.ruleForm[key] = dangerDetails[key]
-              ? dangerDetails[key].split(' ')[0]
-              : ''
-          } else {
-            this.ruleForm[key] = dangerDetails[key]
-          }
-        }
-        if (dangerDetails.url && dangerDetails.url.length) {
-          await this.getImgFile(dangerDetails.url).then((r) => {
-            this.fileList = r
-          })
-        }
-        this.ruleForm.id = dangerDetails.id
-      } else {
-        this.ruleForm.accidentPrePlanId = val.id
-        this.ruleForm.accidentPreProjectId = val.accidentPreProjectId
-      }
-
-      this.dialogVisible = true
-    },
-    getRowClass({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex == 0) {
-        return 'background:#f5f5f5'
-      } else {
-        return ''
-      }
-    },
-    clear() {
-      this.$nextTick(() => {
-        this.$refs['ruleForm'].resetFields()
-        this.ruleForm.id = ''
-        this.fileList = []
-        this.ruleForm = {
+  import { addDanger } from '@/service/accidentManagement'
+  import { updateDanger } from '@/service/accidentManagement'
+  import ResourcesService from '@/service/ResourcesService'
+  // import { getImgFile } from '@/api/resources'
+  import { mapGetters } from 'vuex'
+  export default {
+    name: 'AddOrAlter',
+    props: {},
+    data() {
+      return {
+        ResourcesService: new ResourcesService(),
+        dialogVisible: false,
+        dealDateStartOptions: this.beginDate(),
+        typeData: [],
+        ruleForm: {
           accidentPreProjectId: '', // 合同id
           accidentPrePlanId: '', // 计划id
-          level: null, // 风险等级
+          level: '', // 风险等级
           checkDate: '', // 检查日期
           remark: '', // 风险源
           foundation: '', // 判断
           advice: '', // 建议
           files: '', // 文件
-          danger: false, // 风险记录False，隐患排查为true
-        }
-      })
-    },
-    close() {
-      this.clear()
-    },
-    async configRegister() {
-      let data = this.ruleForm
-      data.checkDate = `${data.checkDate} 00:00:00`
-      data.danger = false // 风险记录False，隐患排查为true
-      data.fileIds = this.fileList.map((item) => {
-        return item.id
-      })
-      let res = {}
-      if (data.id) {
-        res = await updateDanger(data, data.id)
-      } else {
-        res = await addDanger(data)
-      }
-      if (res.code === '0000') {
-        this.$message.success('添加成功')
-        this.$emit('successCb')
-        this.clear()
-        this.dialogVisible = false
-      }
-    },
-    register() {
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          this.configRegister()
-        } else {
-          return false
-        }
-      })
-    },
-    handleSelect(item) {
-      this.ruleForm.corporationCode = item.blCode
-    },
-    handleSelectionChange(val) {
-      this.ruleForm.experts = val.map((item) => {
-        let obj = {
-          name: item.name,
-          specialty: item.specialty,
-        }
-        return obj
-      })
-    },
-    handleAvatarSuccess(res, file) {
-      if (res.code == '0000') {
-        this.fileList.push({
-          uid: file.uid,
-          url: URL.createObjectURL(file.raw),
-          id: res.data.id,
-        })
-      }
-    },
-
-    //检测文件删除
-    fileRemove(file, fileList) {
-      this.fileList = fileList
-      //       this.fileList = this.fileList.filter((item) => {
-      //   return item.uid != file.uid
-      // })
-    },
-    beforeAvatarUpload(file) {
-      const isLt10M = file.size / 1024 / 1024 < 20
-      if (!isLt10M) {
-        this.$message.error('单文件上限20MB!')
-      }
-      return isLt10M
-    },
-    onExceed() {
-      // this.$message.warning('最多支持10个附件')
-    },
-    beginDate() {
-      let self = this
-      return {
-        disabledDate(time) {
-          let startDate = self.serviceData
-            ? self.serviceData.split(' ')[0]
-            : new Date()
-          return time.getTime() < new Date(startDate)
+          danger:false, // 风险记录False，隐患排查为true
+        },
+        imageUrl: '',
+        rules: {
+          level: [
+            { required: true, message: '请选择风险等级', trigger: 'change' },
+          ],
+          checkDate: [
+            { required: true, message: '请选择辨识日期', trigger: 'change' },
+          ],
+          remark: [
+            { required: true, message: '请输入风险源', trigger: 'blur' },
+          ],
+          foundation: [
+            { required: true, message: '请输入判断依据', trigger: 'blur' },
+          ],
+          advice: [
+            { required: true, message: '请输入管控措施建议', trigger: 'blur' },
+          ],
+          files: [
+            { required: true, message: '请上传风险照片', trigger: 'blur' },
+          ],
         },
       }
     },
-    currentEnum(key) {
-      return this.enumObj['SafetyAssessmentEnum'] || []
+    computed: {
+      ...mapGetters({
+        enumObj: 'getEnumAll',
+      }),
     },
-    async getImgFile(list) {
-      for (let key of list) {
-        let { data } = await getImgFile(key.url)
-
-        key.url = data
-      }
-
-      return list
+    mounted() {
+      // this.initRole()
     },
-  },
-}
+    methods: {
+      async initData(val, dangerDetails) {
+        this.typeData = this.currentEnum()
+        if (dangerDetails) {
+          for (let key in this.ruleForm) {
+            if (key === 'level') {
+              this.ruleForm[key] = dangerDetails[key]
+            } else if (key === 'files') {
+              this.ruleForm[key] = {}
+            } else if (key === 'checkDate') {
+              this.ruleForm[key] = dangerDetails[key]
+                ? dangerDetails[key].split(' ')[0]
+                : ''
+            } else {
+              this.ruleForm[key] = dangerDetails[key]
+            }
+          }
+          try {
+            for (let key of dangerDetails.url) {
+              let {url} = await this.ResourcesService.downloadOrViewFile(key)
+              this.imageUrl = url
+            }
+          } catch (error) {
+            console.log(error)
+          }
+          this.ruleForm.id = dangerDetails.id
+          console.log(this.ruleForm)
+        } else {
+          this.ruleForm.accidentPrePlanId = val.id
+          this.ruleForm.accidentPreProjectId = val.accidentPreProjectId
+        }
+        this.dialogVisible = true
+      },
+      getRowClass({ row, column, rowIndex, columnIndex }) {
+        if (rowIndex == 0) {
+          return 'background:#f5f5f5'
+        } else {
+          return ''
+        }
+      },
+      clear() {
+        this.$nextTick(() => {
+          this.$refs['ruleForm'].resetFields()
+        })
+        for (let key in this.ruleForm) {
+          this.ruleForm[key] = ''
+        }
+        this.ruleForm.id = ''
+        this.imageUrl = ''
+      },
+      close() {
+        this.clear()
+      },
+      async configRegister() {
+        let data = JSON.parse(JSON.stringify(this.ruleForm))
+        data.checkDate = `${data.checkDate} 00:00:00`
+        data.danger = false // 风险记录False，隐患排查为true
+        let formData = new FormData()
+        for (let key in data) {
+          if (key === 'files' && this.ruleForm[key]) {
+            formData.append(key, this.ruleForm[key]['file'])
+          } else {
+            formData.append(key, data[key])
+          }
+        }
+        let res = {}
+        if (data.id) {
+          res = await updateDanger(formData, data.id)
+        } else {
+          res = await addDanger(formData)
+        }
+        if (res.code === '0000') {
+          this.$message.success('添加成功')
+          this.$emit('successCb')
+          this.clear()
+          this.dialogVisible = false
+        }
+      },
+      register() {
+        this.$refs['ruleForm'].validate((valid) => {
+          if (valid) {
+            this.configRegister()
+          } else {
+            return false
+          }
+        })
+      },
+      handleSelect(item) {
+        console.log(item)
+        this.ruleForm.corporationCode = item.blCode
+      },
+      handleSelectionChange(val) {
+        this.ruleForm.experts = val.map((item) => {
+          let obj = {
+            name: item.name,
+            specialty: item.specialty,
+          }
+          return obj
+        })
+      },
+      handleAvatarSuccess(res, file) {
+        console.log(file)
+        this.imageUrl = URL.createObjectURL(file.raw)
+      },
+      // 图片上传
+      async Upload(file) {
+        console.log(file)
+        this.ruleForm.files = file
+        const formData = new FormData()
+        formData.append('files', file.file)
+        // formData.append('type', file.file.type)
+        // formData.append("channelcode", "sequip")
+        // formData.append("resCode", "I001")
+        // let data = formData
+        // let data = [file.file]
+        // const res = await this.ResourcesService.uploadFile(
+        //   'sequip-svc',
+        //   'payInfo',
+        //   '0',
+        //   data
+        // )
+        // if (res.code == '0000') {
+        //   this.id = res.list[0].fileId
+        //   this.name = res.list[0].fileName
+        // }
+        console.log(formData)
+      },
+      beforeAvatarUpload(file) {
+        const isLt10M = file.size / 1024 / 1024 < 10
+        if (!isLt10M) {
+          this.$message.error('单文件上限10MB!')
+        }
+        return isLt10M
+      },
+      onExceed() {
+        // this.$message.warning('最多支持10个附件')
+      },
+      beginDate() {
+        let self = this
+        return {
+          disabledDate(time) {
+            let startDate = self.serviceData
+              ? self.serviceData.split(' ')[0]
+              : new Date()
+            return time.getTime() < new Date(startDate)
+          },
+        }
+      },
+      currentEnum(key) {
+        console.log(this.enumObj);
+        return this.enumObj['SafetyAssessmentEnum'] || []
+      },
+      async getImgFile(url) {
+        let res = await getImgFile(url)
+        return res
+      },
+    },
+  }
 </script>
 
-<style lang="scss">
-#addRiskRecord .avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-#addRiskRecord .avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-#addRiskRecord .avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 148px;
-  height: 148px;
-  line-height: 148px;
-  text-align: center;
-}
-#addRiskRecord .avatar {
-  width: 148px;
-  height: 148px;
-  display: block;
-}
+<style lang="less">
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409eff;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>
-
-<style lang="scss" scoped>
+<style lang="less">
 #addRiskRecord {
+  .el-upload--text {
+    width: 180px;
+  }
 }
 </style>

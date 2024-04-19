@@ -1,0 +1,226 @@
+<template>
+    <div id="policyHolder">
+        <!-- 投保人信息 -->
+        <Title title="投保人信息"></Title>
+        <div class="ts-insure-scheme">
+            <el-form :label-position="labelPosition" label-width="100px" ref="ruleForm"  :inline="true" :model="ruleForm" class="demo-form-inline" :rules="formRules">
+                <el-form-item label="投保人名称" prop="orgFullName">
+                    <el-input v-model="ruleForm.orgFullName" disabled></el-input>
+                </el-form-item>
+                <span class="pl120"></span>
+                <el-form-item label="营业地址" prop="address">
+                    <el-input v-model="ruleForm.address" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="证件类型" prop="codeType">
+                    <el-input v-model="ruleForm.codeType" disabled></el-input>
+                </el-form-item>
+                <span class="pl120"></span>
+                <el-form-item label="证件号码" prop="codeNum">
+                    <el-input v-model="ruleForm.codeNum" disabled></el-input>
+                </el-form-item>
+                <p class="tip-text">注：修改投保人信息请去<span @click="goToUserCenter">个人中心-账户设置</span>修改</p>
+                
+                <el-form-item label="联系人" prop="linkManName">
+                    <el-input clearable v-model="ruleForm.linkManName" placeholder="联系人"></el-input>
+                </el-form-item>
+                <span class="pl120"></span>
+                <el-form-item label="联系电话" prop="linkManPhone">
+                    <el-input clearable v-model="ruleForm.linkManPhone" placeholder="联系人电话"></el-input>
+                </el-form-item>
+                <el-form-item label="电子邮箱" prop="linkManEmil">
+                    <el-input clearable v-model="ruleForm.linkManEmil" placeholder="电子邮箱"></el-input>
+                </el-form-item>
+                    <br>
+                <el-form-item label="地址" label-width="100px" prop="province" >
+                    <el-select v-model="ruleForm.province" @change="proChange" placeholder="请选择省">
+                            <el-option :label="item.label" :value="key" v-for="(item,key) in province" :key="key"></el-option>
+                        </el-select>
+                    </el-form-item>
+                <el-form-item label="" label-width="20px" prop="city" >
+                    <el-select v-model="ruleForm.city" placeholder="请选择市" @change="citChange">
+                        <el-option :label="item.label" :value="key" v-for="(item,key) in city" :key="key"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="" label-width="20px" prop="county">
+                    <el-select v-model="ruleForm.county" placeholder="请选择区">
+                        <!-- <el-option :label="item.label" :value="key" v-for="(item,key) in  province[proIndex].children[cityIndex].children" :key="key"></el-option> -->
+                        <el-option :label="item.label" :value="key" v-for="(item,key) in  district" :key="key"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="" prop="orgAddress" class="ml100">
+                    <el-input clearable v-model="ruleForm.orgAddress" style="width:931px"></el-input>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</template>
+<script>
+import Title from '../Title';
+import areaList from '@/assets/js/area.js';
+import UserService from '@/service/UserService';
+import productService from '@/service/ProductService'
+export default {
+    props: {
+        ruleForms:{
+            type: Object,
+            required:true
+        }
+    },
+    components: {
+        Title
+    },
+    mounted() {
+        this.ruleForm = this.ruleForms ? this.ruleForms:{};
+    },
+    data() {
+        var validatePhone= (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入手机号'));
+            } else if (!/^(1[3-8][0-9]{9})$/i.test(value)) {
+                callback(new Error('请输入正确的手机号格式!'));
+            } else {
+                callback();
+            }
+        };
+        return {
+            UserService: new UserService(),
+            productService: new productService(),
+            labelPosition: 'left',
+            ruleForm:{      // 投保人信息
+                address: '',
+                codeType: '',
+                codeNum: '',
+                orgFullName:'', 
+                linkManName:'',
+                linkManPhone:'',
+                linkManEmil:'',
+                orgAddress:'',
+                province:'',
+                city:'',
+                county:'',
+                provinceCode:'',
+                cityCode:'',
+                countyCode:'',
+                fax:'',
+                attachments:[],
+                threeInOneCode:'',
+                organizationCode:''
+            },
+            formRules:{
+                address: [
+                    { required: true, message: '请输入营业地址', trigger: 'blur' },
+                ],
+                codeType: [
+                    { required: true, message: '请输入证件类型', trigger: 'blur' }
+                ],
+                codeNum: [
+                    { required: true, message: '请输入证件号码', trigger: 'blur' }
+                ],
+                orgFullName: [
+                    {  required: true, message: '请输入投保人名称', trigger: 'blur' }
+                ],
+                linkManName: [
+                    {  required: true, message: '请输入联系人', trigger: 'blur' }
+                ],
+                linkManPhone: [
+                    {  validator: validatePhone,required: true, trigger: 'blur' }
+                ],
+                linkManEmil: [
+                    { type:'email', required: true, message: '请输入电子邮箱', trigger: 'blur' }
+                ],
+                province: [
+                    { required: true, message: '请选择省', trigger: 'change' }
+                ],
+                city: [
+                    { required: true, message: '请选择市', trigger: 'change' }
+                ],
+                county: [
+                    { required: true, message: '请选择区', trigger: 'change' }
+                ],
+                orgAddress: [
+                    { required: true, message: '请选择地址', trigger: 'blur' }
+                ]  
+            },
+            province: [],
+            city: [],
+            district: [],
+        }
+    },
+    created(){
+        this.getArea(); 
+    },
+    methods: {
+        async getArea(){
+            var response = await this.UserService.getArea();
+            this.province = response.data;
+        },
+        goToUserCenter() {
+            this.$router.push('/userCenter/profile');
+        },
+        proChange(e) {
+            this.city = this.province[e].children;
+            this.ruleForm.province= this.province[e].label
+            this.ruleForm.provinceCode= this.province[e].value
+        },
+        citChange(e) {
+            this.district = this.city[e].children;
+            this.ruleForm.city= this.city[e].label 
+            this.ruleForm.cityCode= this.city[e].value
+        },
+        countyChange(e) {
+            this.ruleForm.county= this.district[e].label 
+            this.ruleForm.countyCode= this.district[e].value
+        },
+        getPolicyHolder() {
+            let returnObj = {};
+            this.$refs['ruleForm'].validate((valid) => {
+                if (valid) {
+                    returnObj = this.ruleForm;
+                } else {
+                    this.$message({
+                        message: '投保人信息填写不完整！！',
+                        type: 'warning'
+                    });
+                    return false;
+                }
+            });
+            return returnObj;
+        },
+        getPolicyHolderNoVal() {
+            return this.ruleForm;
+        }
+    }
+}
+</script>
+<style lang="less" scoped>
+    #policyHolder {
+        .ts-insure-scheme{
+            padding-left: 70px;
+            padding-right: 70px; 
+            .pl120 {
+                padding-left: 120px;
+            }
+            .el-form-item {
+                .el-input {
+                    width: 350px;
+                }
+            }
+            .el-select {
+                width: 301px;
+            }
+            .ml100 {
+                margin-left: 100px;
+            }
+        }
+        .tip-text {
+            margin: 0 100px 20px;
+            span {
+                color: #0198ef;
+                font-weight: 700;
+                cursor: pointer;
+            }
+        }
+    }
+</style>
+
+

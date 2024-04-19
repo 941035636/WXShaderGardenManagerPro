@@ -1,0 +1,79 @@
+{
+    "data": [{
+            "branchCode": "JT0000",
+            "branchName": "江泰保险经纪股份有限公司本部"
+        },
+        {
+            "branchCode": "JT0144001",
+            "branchName": "广东分公司"
+        },
+        {
+            "branchCode": "JT0152001",
+            "branchName": "贵州分公司"
+        },
+        {
+            "branchCode": "JT0153001",
+            "branchName": "昆明分公司"
+        },
+        {
+            "branchCode": "JT0123001",
+            "branchName": "黑龙江分公司"
+        },
+        {
+            "branchCode": "JT0122000",
+            "branchName": "吉林分公司"
+        },
+        {
+            "branchCode": "JT0141001",
+            "branchName": "河南分公司"
+        },
+        {
+            "branchCode": "JT0121002",
+            "branchName": "沈阳分公司"
+        },
+        {
+            "branchCode": "JT0146001",
+            "branchName": "海南分公司"
+        },
+        {
+            "branchCode": "JT0167001",
+            "branchName": "石家庄营业部"
+        },
+        {
+            "branchCode": "JT0150",
+            "branchName": "重庆分公司"
+        },
+        {
+            "branchCode": "JT0144002",
+            "branchName": "深圳分公司"
+        },
+        {
+            "branchName": "南京分公司",
+            "branchCode": "JT0132001"
+        },
+        {
+            "branchCode": "JT0165001",
+            "branchName": "新疆分公司"
+        },
+        {
+            "branchCode": "JT0161002",
+            "branchName": "西安分公司"
+        },
+        {
+            "branchCode": "JT0122001",
+            "branchName": "长春分公司"
+        },
+        {
+            "branchCode": "JT0164001",
+            "branchName": "宁夏分公司"
+        },
+        {
+            "branchCode": "JT0137005",
+            "branchName": "潍坊分公司"
+        },
+        {
+            "branchCode": "JT0137002",
+            "branchName": "青岛分公司"
+        }
+    ]
+}

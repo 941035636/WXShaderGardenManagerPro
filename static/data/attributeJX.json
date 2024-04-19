@@ -1,0 +1,13 @@
+[
+    {
+        "title": "绩效属性",
+        "value":"JXVALUE",
+        "children": [
+            {
+                "describe":"全面营销人员分配比例（%）",
+                "key":"qmyxRatio",
+                "value":""
+            }
+        ]
+    }
+]

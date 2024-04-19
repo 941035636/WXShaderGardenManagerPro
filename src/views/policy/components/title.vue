@@ -1,45 +1,31 @@
 <template>
-  <div id="titlesCla">
-    <div class="futit">
-      <!-- <span class="bg-c"></span> -->
-      <div class="text-title pl10">
-        <span class="ml20">{{ label }}</span>
-      </div>
+    <div class="ts-border">
+        <h2 class="ts-insure-title">
+            {{title}}
+        </h2>
+         <!-- <el-divider></el-divider> -->
     </div>
-  </div>
 </template>
 
 <script>
-  export default {
-    name: 'NewTitle',
-    props: {
-      label: {
-        type: String,
-        default: () => {
-          return ''
-        },
-      },
-    },
-  }
+export default {
+    props:['title']
+        
+    
+}
 </script>
 
-<style lang="scss" scoped>
-  #titlesCla {
-    border-bottom: 1px solid #dfe0e2;
-    // .bg-c {
-    //   line-height: 20px;
-    //   display: inline-block;
-    //   width: 5px;
-    //   height: 20px;
-    //   vertical-align: bottom;
-    //   background-color: #f5c277;
-    // }
-    .text-title {
-      font-size: 18px;
-      color: #3470ff;
-      font-weight: 500;
-      padding: 15px 0;
-      background: #fff;
-    }
-  }
+<style scoped>
+.ts-border{
+    /* border-bottom: 1px solid #ccc;  */
+    margin-bottom: 20px;
+}
+.ts-insure-title{
+    color: #d1a86c;
+    font-size: 20px;
+    padding: 17px 0px;
+    padding-left: 10px;
+    /* border-left: 4px solid  #d1a86c; */
+    background-color: #efe4c0;
+}
 </style>

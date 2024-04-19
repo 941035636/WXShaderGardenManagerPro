@@ -1,0 +1,13 @@
+{
+    "data": [
+        {
+            "value": "06",
+            "label": "保单保费",
+            "code":"",
+            "newCode":"",
+            "show":true,
+            "reason": ""
+        }
+    ]
+
+}

@@ -65,25 +65,25 @@
             <template slot-scope="scope">
               <el-radio
                 v-model="ruleForm.serviceAgencyCode"
-                :label="scope.row.businessCode"
+                :label="scope.row.code"
                 @change="setServiceBranch(scope.row)"
               >
-                <p style="display: none">{{ scope.row.businessCode }}</p>
+                <p style="display: none">{{ scope.row.code }}</p>
               </el-radio>
             </template>
           </el-table-column>
           <el-table-column
-            prop="orgName"
+            prop="name"
             label="服务机构名称"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
-            prop="safetyCharger"
+            prop="branchLinkMan"
             label="联系人"
             show-overflow-tooltip
           ></el-table-column>
           <el-table-column
-            prop="safetyChargerPhone"
+            prop="branchLinkPhone"
             label="联系电话"
             show-overflow-tooltip
           ></el-table-column>
@@ -98,9 +98,7 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" @click="toThisTag('projectList')">
-          返回
-        </el-button>
+        <el-button type="info" @click="toThisTag">返回</el-button>
         <el-button type="primary" @click="register">提交</el-button>
       </el-form-item>
     </el-form>
@@ -108,19 +106,17 @@
 </template>
 
 <script>
-  import { getBranchList } from '@/api/userDataManagement'
-  import { smalltoBIG } from '@/utils/validate'
-  import { addProject } from '@/api/accidentManagement'
-  import { updateProject } from '@/api/accidentManagement'
-  import { getProjectDetails } from '@/api/accidentManagement'
-  import { dateTest } from '@/utils/validate'
-  import { validateContractNo } from '@/utils/validateFrom'
-  import { baseMixin } from '@/mixins/baseMixins'
+  // import { getBranchList } from '@/api/userDataManagement'
+  // import { addProject } from '@/service/accidentManagement'
+  // import { updateProject } from '@/service/accidentManagement'
+  // import { getProjectDetails } from '@/service/accidentManagement'
+  import { smalltoBIG } from '@/util/validate'
+  import { dateTest } from '@/util/validate'
+  import { validateContractNo } from '@/util/validateFrom'
   import { mapGetters } from 'vuex'
   export default {
     name: 'ServiceAdd',
     components: {},
-    mixins: [baseMixin],
     data() {
       return {
         dealDateStartOptions: this.beginDate(),
@@ -138,7 +134,6 @@
           serviceAgencyName: '', // 安全服务机构名称
           startTime: '',
           endTime: '',
-          serviceAgencyId: '',
         },
         accidentPreFundBig: '零',
         userCode: '',
@@ -214,7 +209,6 @@
           desc: false,
           orderby: '',
           type: '02',
-          servicename: 'safetyOrganizationSvc',
         }
         let res = await getBranchList(from)
         if (res.code === '0000') {
@@ -238,7 +232,7 @@
       async configRegister() {
         let data = JSON.parse(JSON.stringify(this.ruleForm))
         if (dateTest(this.ruleForm.startTime, this.ruleForm.endTime)) {
-          this.$baseMessage('止起不能大于起期，请重新选择', 'error')
+          this.$message.error('止起不能大于起期，请重新选择')
           return
         }
         data.startTime = `${data.startTime} 00:00:00`
@@ -247,12 +241,12 @@
         if (data.id) {
           let res = await updateProject(data, data.id)
           if (res.code === '0000') {
-            this.toThisTag('projectList')
+            this.toThisTag()
           }
         } else {
           let res = await addProject(data)
           if (res.code === '0000') {
-            this.toThisTag('projectList')
+            this.toThisTag()
           }
         }
       },
@@ -267,10 +261,15 @@
       },
       // 处理选中省市区方法
       setServiceBranch(e) {
-        this.ruleForm.serviceAgencyName = e.orgName
-        this.ruleForm.serviceAgencyId = e.id
-        this.ruleForm.contactName = e.safetyCharger
-        this.ruleForm.contactNum = e.safetyChargerPhone
+        this.ruleForm.serviceAgencyName = e.name
+        this.ruleForm.contactName = e.branchLinkMan
+        this.ruleForm.contactNum = e.branchLinkPhone
+      },
+      // 设置路由
+      async toThisTag() {
+        this.$router.push({
+          path: '/prev/project',
+        })
       },
       beginDate() {
         let self = this
@@ -287,9 +286,11 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   #servicrAdd {
+    padding-top: 10px;
     margin: 10px;
+    background-color: #fff;
     .btn-bottom {
       margin-top: 20px;
       text-align: center;

@@ -1,0 +1,156 @@
+{
+  "id": "1988403",
+  "name": "特设后台",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "17347492",
+      "name": "视频",
+      "font_class": "shipin",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "10892557",
+      "name": "卤蛋",
+      "font_class": "ludan",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "11323740",
+      "name": "收件录单_壹米滴答",
+      "font_class": "shoujianludan",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "19818662",
+      "name": "绩效管理",
+      "font_class": "jixiaoguanli",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "17087288",
+      "name": "加号",
+      "font_class": "jiahao1",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "16968701",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "16968702",
+      "name": "链接",
+      "font_class": "lianjie",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "16968703",
+      "name": "人员",
+      "font_class": "renyuan",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "16968704",
+      "name": "减号",
+      "font_class": "jianhao",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "16968705",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "16968706",
+      "name": "信息",
+      "font_class": "xinxi",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "16964195",
+      "name": "info (1)",
+      "font_class": "info1",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "16346839",
+      "name": "2",
+      "font_class": "2",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "16346840",
+      "name": "9svg",
+      "font_class": "9svg",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "16346841",
+      "name": "1",
+      "font_class": "1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "16346842",
+      "name": "7",
+      "font_class": "7",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "16346843",
+      "name": "8",
+      "font_class": "8",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "16346844",
+      "name": "4",
+      "font_class": "4",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "16346845",
+      "name": "6",
+      "font_class": "6",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "16346846",
+      "name": "5",
+      "font_class": "5",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "16346847",
+      "name": "3",
+      "font_class": "3",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    }
+  ]
+}

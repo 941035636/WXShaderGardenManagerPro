@@ -12,33 +12,33 @@
 </template>
 
 <script>
-export default {
-  name: 'TipsText',
-  props: {
-    short: {
-      type: String,
-      default: () => {
-        return ''
+  export default {
+    name: 'TipsText',
+    props: {
+      short: {
+        type: String,
+        default: () => {
+          return ''
+        },
+      },
+      length: {
+        type: Number,
+        default: () => {
+          return 15
+        },
+      },
+      text: {
+        type: String,
+        default: () => {
+          return ''
+        },
       },
     },
-    length: {
-      type: Number,
-      default: () => {
-        return 15
-      },
-    },
-    text: {
-      type: String,
-      default: () => {
-        return ''
-      },
-    },
-  },
-}
+  }
 </script>
 
-<style lang="scss" scoped>
-#TipsText {
-  display: inline;
-}
+<style lang="less" scoped>
+  #TipsText {
+    display: inline;
+  }
 </style>

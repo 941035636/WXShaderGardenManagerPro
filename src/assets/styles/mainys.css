@@ -1,0 +1,280 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+body {
+    font-family: "Microsoft YaHei", '微软雅黑';
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: #666666;
+    background-color: #EAEAEA;
+}
+
+html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+header.page-header {
+    -webkit-background-size: cover;
+    height: 330px;
+    background-size: cover;
+    position: relative;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #444444;
+    font-family: “Microsoft YaHei”;
+    font-weight: normal;
+    line-height: 1.2;
+    margin-top: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+a,
+p,
+li,
+input,
+textarea {
+    margin: 0px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+    color: #6683d5;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+    outline: none;
+    text-decoration: none;
+    border: 0;
+}
+
+.curser {
+    cursor: pointer;
+}
+
+.cor-ff46 {
+    color: #ff4600;
+}
+
+.fl {
+    float: left;
+}
+
+.rl {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    color: #cfcfcf;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+    color: #cfcfcf;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    color: #cfcfcf;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: #cfcfcf;
+}
+
+.cenys {
+    width: 1200px;
+    margin: 30px auto;
+}
+
+.col46 {
+    color: #ff4600;
+}
+
+.with30 {
+    width: 30%;
+}
+
+.with400 {
+    width: 400;
+}
+
+.with100 {
+    width: 100%;
+}
+
+.with44 {
+    width: 44%;
+}
+
+.with100 li {
+    width: 100%;
+    height: 49px;
+    border-bottom: 1px solid #f2f2f2;
+}
+
+.content .wrapper {
+    padding-top: 20px;
+}
+
+.wrapper-content {
+    background-color: #ffffff;
+    border: 1px solid #f2f2f2;
+}
+
+.wrapper-content .wrapper-box {
+    background-color: #f0f2f5;
+}
+
+.wrapper-content .wrapper-box .xiaxianslo {
+    background-color: white;
+}
+
+.wrapper-content .wrapper-box .ibox-content {
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+.ibox-title {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e7eaec;
+    margin-bottom: 0;
+}
+
+.ititys {
+    height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #444444;
+    font-weight: bold;
+}
+
+.ibox-content {
+    padding: 20px;
+}
+
+.pad20rl {
+    padding-right: 20px;
+}
+
+.pad20fl {
+    padding-left: 20px;
+}
+
+.pad20bot {
+    padding-bottom: 20px;
+}
+
+.pad20top {
+    padding-top: 20px;
+}
+
+.rlduiq {
+    text-align: right;
+}
+
+.titrlys {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin-top: -18px;
+}
+
+
+/* element-ui组件默认样式更改 */
+
+#form {
+    width: 100%;
+}
+
+.el-message-box__title {
+    font-size: 14px;
+}
+
+#form>.element-block {
+    display: block;
+}
+
+#form .element-block {
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+#form .element-block .el-form-item__content {
+    margin-left: 0 !important;
+}
+
+#form .element-block span {
+    /* float: right; */
+}
+
+#form .el-form-item .el-select,
+#form .el-form-item .el-autocomplete,
+#form .el-form-item .el-cascader {
+    width: 100%;
+}
+
+#form .el-form-item.labelnone .el-form-item__content {
+    margin-left: 1rem !important;
+}
+
+.row-box {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.tabelNewStyle th {
+    font-size: 14px;
+    color: #444444;
+    background-color: #e5e6f1;
+    font-weight: normal;
+}
+
+.el-table.tabelNewStyle .cell,
+.el-table.tabelNewStyle th div,
+.tabelNewStyle .el-table--border td:first-child .cell,
+.tabelNewStyle .el-table--border th:first-child .cell {
+    padding-left: 20px;
+}

@@ -1,0 +1,42 @@
+{
+	"typeOptions":[
+		{
+			"value": "1",
+			"label": "安装工"
+		},{
+			"value": "2",
+			"label": "维保工"
+		},{
+			"value": "3",
+			"label": "改造工"
+		},{
+			"value": "4",
+			"label": "内勤人员"
+		},{
+			"value": "5",
+			"label": "其他"
+		},
+		{
+			"value": "6",
+			"label": "安装工兼维保工"
+		}
+	],
+	"idType": [
+		{
+			"value": "cardType_0",
+			"label": "中国居民身份证"
+		},
+		{
+			"value": "cardType_12",
+			"label": "澳门身份证"
+		},
+		{
+			"value": "cardType_1",
+			"label": "护照"
+		},
+		{
+			"value": "cardType_2",
+			"label": "军官证"
+		}
+	]
+}

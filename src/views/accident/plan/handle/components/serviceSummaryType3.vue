@@ -8,68 +8,42 @@
         :rules="rules"
         label-width="200px"
       >
-        <div class="display-flex">
-          <el-form-item label="检查结果" prop="unAccordNum">
-            <span class="color-green mr5 ml10">符合</span>
-            <el-input
-              maxlength="999999999"
-              v-model="ruleForm.unAccordNum"
-              class="w100"
-              type="Number"
-              placeholder="请输入"
-              oninput="if(value.length > 9) value = value.slice(0,9)"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label-width="10px" prop="accordNum">
-            <span class="mr5 ml10 color-orange">不符合</span>
-            <el-input
-              v-model="ruleForm.accordNum"
-              class="w100"
-              maxlength="999999999"
-              type="Number"
-              placeholder="请输入"
-              oninput="if(value.length > 9) value = value.slice(0,9)"
-            ></el-input>
-          </el-form-item>
-          <el-form-item label-width="10px" prop="unRelate">
-            <span class="mr5 ml10 color-gray-5">不涉及</span>
-            <el-input
-              v-model="ruleForm.unRelate"
-              class="w100"
-              maxlength="999999999"
-              type="Number"
-              placeholder="请输入"
-              oninput="if(value.length > 9) value = value.slice(0,9)"
-            ></el-input>
-            <span class="ml30">
-              本次服务共检查：
-              <span class="color-orange">{{ theSum }}</span>
-              项
-            </span>
-          </el-form-item>
-        </div>
-
-        <el-form-item label="服务情况说明" prop="preContent">
+        <el-form-item label="风险管控责任人姓名：" prop="chargePersonName">
           <el-input
-            v-model="ruleForm.preContent"
-            class="w600"
+            v-model.trim="ruleForm.chargePersonName"
+            class="w280"
+            size="small"
+            placeholder="请输入风险管控责任人姓名"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="风险管控责任人联系电话：" prop="chargePersonPhone">
+          <el-input
+            v-model.trim="ruleForm.chargePersonPhone"
+            class="w280"
+            size="small"
+            placeholder="请输入风险管控责任人联系电话"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="服务情况说明" prop="checkRemark">
+          <el-input
+            v-model.trim="ruleForm.checkRemark"
+            class="w280"
+            size="small"
             type="textarea"
-            placeholder="请输入"
+            placeholder="请输入服务计划说明"
           ></el-input>
         </el-form-item>
         <el-form-item label="服务照片">
           <el-upload
+            action="#"
             list-type="picture-card"
+            :auto-upload="false"
             :file-list="fileList"
-            :action="this.baseURL + `/files/v1/upload/file`"
-            name="file"
-            :headers="headers"
+            multiple
             :limit="9"
-            :on-change="handleEditChange"
-            :class="{ hide: hideUploadBtn }"
-            :data="upLoadData"
-            :on-success="handleAvatarSuccess"
+            :http-request="Upload"
             :before-upload="beforeAvatarUpload"
+            :on-change="fileChange"
             :on-remove="fileRemove"
             accept=".jpg, .jpeg, .png, PNG"
             :on-exceed="onExceed"
@@ -77,214 +51,256 @@
             <i class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
+        <div class="text-center mb20">
+          <el-button @click="toThisTag" round>取 消</el-button>
+          <el-button type="warning" @click="register" round>确认提交</el-button>
+        </div>
       </el-form>
     </div>
   </div>
 </template>
 
 <script>
-import Title from '@/components/Title'
-import { baseURL } from '@/config'
-
-import store from '@/store'
-import { addAssessmenSummary } from '@/api/accidentManagement'
-import {
-  validateTelephone,
-  validateName,
-  validatePhone,
-  validateRemark,
-} from '@/utils/validateFrom'
-import { mapGetters } from 'vuex'
-import { validateNumMinOrMax } from '@/utils/validateFrom'
-export default {
-  name: 'ServiceSummaryType3',
-  components: {
-    Title,
-  },
-  filters: {},
-  props: {},
-  data() {
-    return {
-      hideUploadBtn: false,
-      data: {},
-      headers: {
-        authorization: store.getters['user/accessToken'],
-      },
-      baseURL: baseURL,
-      upLoadData: {},
-      activeName: 'first',
-      btnLoading: false,
-      dealDateStartOptions: this.beginDate(),
-      tableList: [{}],
-      fileList: [],
-      ruleForm: {
-        id: '', // 计划id
-        preContent: '', // 备注
-        unAccordNum: 0, // 符合
-        accordNum: 0, // 不符合
-        unRelate: 0, // 不涉及
-        planStatus: '',
-      },
-      imageUrl: '',
-      rules: {
-        unAccordNum: [
-          { required: true, validator: validateNumMinOrMax, trigger: 'blur' },
-        ],
-        accordNum: [
-          { required: true, validator: validateNumMinOrMax, trigger: 'blur' },
-        ],
-        unRelate: [
-          { required: true, validator: validateNumMinOrMax, trigger: 'blur' },
-        ],
-        preContent: [
-          { required: true, message: '请输入服务情况说明', trigger: 'blur' },
-          {
-            min: 2,
-            max: 200,
-            message: '字符2-200位',
-          },
-        ],
-        files: [{ required: true, message: '请上传隐患照片', trigger: 'blur' }],
-      },
-    }
-  },
-  computed: {
-    ...mapGetters({
-      getEnumAll: 'getEnumAll',
-    }),
-    theSum() {
-      let sum =
-        Number(this.ruleForm.unAccordNum) +
-        Number(this.ruleForm.accordNum) +
-        Number(this.ruleForm.unRelate)
-      return sum
+  import Title from '@/components/Title'
+  import { addAssessmenSummary } from '@/service/accidentManagement'
+  import { validateTelephone,validateName,validatePhone,validateRemark } from '@/util/validateFrom'
+  import { mapGetters } from 'vuex'
+  export default {
+    name: 'serviceSummaryType3',
+    components: {
+      Title,
     },
-  },
-  mounted() {},
-  methods: {
-    // 最多上传6张图，超过时隐藏上传按钮
-    handleEditChange(file, fileList) {
-      this.hideUploadBtn = fileList.length >= 9
-    },
-    async initData(val) {
-      this.dialogVisible = true
-      // this.ruleForm.accidentPreProjectId = val.id
-    },
-
-    clear() {
-      this.$nextTick(() => {
-        this.$refs['ruleForm'].resetFields()
-      })
-      this.ruleForm.id = ''
-      console.log(this.ruleForm)
-    },
-    close() {
-      this.clear()
-    },
-    async configRegister() {
-      let data = {}
-      data.fileIds = this.fileList.map((item) => {
-        return item.id
-      })
-      data.preContent = this.ruleForm.preContent
-      data.planStatus = this.ruleForm.planStatus
-      data.unAccordNum = this.ruleForm.unAccordNum
-      data.accordNum = this.ruleForm.accordNum
-      data.unRelate = this.ruleForm.unRelate
-      data.id = this.$route.query.id
-      let res = await addAssessmenSummary(data, this.$route.query.id)
-      if (res.code === '0000') {
-        this.$emit('getMsg', '')
-      }
-    },
-    register(e) {
-      this.ruleForm.planStatus = e
-      this.$refs['ruleForm'].validate((valid) => {
-        if (valid) {
-          this.configRegister()
-        } else {
-          return false
-        }
-      })
-    },
-    handleSelect(item) {
-      this.ruleForm.corporationCode = item.blCode
-    },
-
-    handleAvatarSuccess(res, file) {
-      if (res.code == '0000') {
-        this.fileList.push({
-          uid: file.uid,
-          url: URL.createObjectURL(file.raw),
-          id: res.data.id,
-        })
-      }
-    },
-
-    beforeAvatarUpload(file) {
-      const isLt10M = file.size / 1024 / 1024 < 20
-      if (!isLt10M) {
-        this.$message.error('单文件上限20MB!')
-      }
-      return isLt10M
-    },
-    onExceed() {},
-
-    //检测文件删除
-    fileRemove(file, fileList) {
-      console.log(file)
-      this.fileList = this.fileList.filter((item) => {
-        return item.uid != file.uid
-      })
-      console.log(this.fileList, 'afterDelete')
-      this.fileList = fileList
-      this.hideUploadBtn = fileList.length >= 9
-    },
-
-    beginDate() {
-      let self = this
+    filters: {},
+    props: {},
+    data() {
       return {
-        disabledDate(time) {
-          let startDate = self.serviceData
-            ? self.serviceData.split(' ')[0]
-            : new Date()
-          return time.getTime() < new Date(startDate)
+        data: {},
+        activeName: 'first',
+        dealDateStartOptions: this.beginDate(),
+        tableList: [{}],
+        fileList: [],
+        ruleForm: {
+          id: '', // 计划id
+          checkRemark: '', // 备注
+          files: '', // 文件
+          chargePersonName:'',
+          chargePersonPhone:'',
+        },
+        imageUrl: '',
+        rules: {
+          checkRemark: [
+            { required: true, validator: validateRemark, trigger: 'blur' },
+          ],
+          chargePersonName: [
+            { required: true, message: '请输入安全风险管控责任人姓名', trigger: 'blur' },
+            { required: true, validator: validateName, trigger: 'blur' },
+          ],
+          chargePersonPhone: [
+            { required: true, message: '请输入安全风险管控责任人联系人电话', trigger: 'blur' },
+            { required: true, validator: validatePhone, trigger: 'blur' },
+          ],
+          files: [
+            { required: true, message: '请上传隐患照片', trigger: 'blur' },
+          ],
         },
       }
     },
-  },
-}
+    computed: {
+      ...mapGetters({
+        getEnumAll: 'getEnumAll',
+      }),
+      getTitle() {
+        let objName =
+          this.getEnumAll.AccidentTypeEnum[this.$route.query.preType]
+        let name = `服务总结（${objName}）`
+        return name
+      },
+    },
+    mounted() {},
+    methods: {
+      async initData(val) {
+        this.dialogVisible = true
+        // this.ruleForm.accidentPreProjectId = val.id
+      },
+      getRowClass({ row, column, rowIndex, columnIndex }) {
+        if (rowIndex == 0) {
+          return 'background:#f5f5f5'
+        } else {
+          return ''
+        }
+      },
+      async querySearchOrg(queryString, cb) {
+        if (!queryString) {
+          cb([])
+        } else {
+          let form = {
+            pn: 1,
+            ps: 10,
+            beginCreateTime: '',
+            endCreateTime: '',
+            custFullName: queryString,
+            status: '1',
+            type: '',
+            bl: '',
+            userAccount: '',
+          }
+          let res = await getOrgList(form)
+          if (res.code == '0000') {
+            let list = res.list.map((item) => {
+              let obj = {
+                value: item.custFullName,
+                blCode: item.blCode,
+              }
+              return obj
+            })
+            cb(list)
+          } else {
+            cb([{ value: '失败' }])
+          }
+        }
+      },
+      clear() {
+        this.$nextTick(() => {
+          this.$refs['ruleForm'].resetFields()
+        })
+        this.ruleForm.id = ''
+        console.log(this.ruleForm)
+      },
+      close() {
+        this.clear()
+      },
+      async configRegister() {
+        let data = JSON.parse(JSON.stringify(this.ruleForm))
+        let formData = new FormData()
+        for (let key in data) {
+          if (key === 'files') {
+            this.fileList.forEach((item=>{
+              formData.append('files', item.raw)
+            }))
+          } else {
+            formData.append(key, data[key])
+          }
+        }
+        let res = await addAssessmenSummary(formData, this.$route.query.id)
+        if (res.code === '0000') {
+          this.$message.success('成功')
+          this.toThisTag()
+        }
+      },
+      register() {
+        this.$refs['ruleForm'].validate((valid) => {
+          if (valid) {
+            this.configRegister()
+          } else {
+            return false
+          }
+        })
+      },
+      handleSelect(item) {
+        this.ruleForm.corporationCode = item.blCode
+      },
+      handleSelectionChange(val) {
+        this.ruleForm.experts = val.map((item) => {
+          let obj = {
+            name: item.name,
+            specialty: item.specialty,
+          }
+          return obj
+        })
+      },
+      handleAvatarSuccess(res, file) {
+        console.log(file)
+        this.imageUrl = URL.createObjectURL(file.raw)
+      },
+      // 图片上传
+      async Upload(file) {
+        this.ruleForm.files = file
+        const formData = new FormData()
+        formData.append('files', file.file)
+        // formData.append('type', file.file.type)
+        // formData.append("channelcode", "sequip")
+        // formData.append("resCode", "I001")
+        // let data = formData
+        // let data = [file.file]
+        // const res = await this.ResourcesService.uploadFile(
+        //   'sequip-svc',
+        //   'payInfo',
+        //   '0',
+        //   data
+        // )
+        // if (res.code == '0000') {
+        //   this.id = res.list[0].fileId
+        //   this.name = res.list[0].fileName
+        // }
+        console.log(formData)
+      },
+      beforeAvatarUpload(file) {
+        const isLt10M = file.size / 1024 / 1024 < 10
+        if (!isLt10M) {
+          this.$message.error('单文件上限10MB!')
+        }
+        return isLt10M
+      },
+      onExceed() {
+        // this.$message.warning('最多支持10个附件')
+      },
+      // 点击上传按钮触发数据
+      fileChange(file, fileList) {
+        const isLt10M = file.size / 1024 / 1024 < 10
+        if (!isLt10M) {
+          this.fileList = fileList.filter(f=>f.name !== file.name);
+          this.$message({ message: "单文件上限10MB!", type: "error" });
+          return false;
+        } else {
+          this.fileList = fileList;
+        }
+      },
+      //检测文件删除
+      fileRemove(file, fileList) {
+        this.fileList = fileList;
+      },
+      // 设置路由
+      async toThisTag() {
+        this.$router.go(-1)
+      },
+      beginDate() {
+        let self = this
+        return {
+          disabledDate(time) {
+            let startDate = self.serviceData
+              ? self.serviceData.split(' ')[0]
+              : new Date()
+            return time.getTime() < new Date(startDate)
+          },
+        }
+      },
+    },
+  }
 </script>
 
-<style scoped lang="scss">
-#serviceSummaryType3 {
-  margin: 0px 20px;
-  .upload-demo {
-    .upload-btn {
-      width: 100px;
+<style scoped lang="less">
+  #serviceSummaryType3 {
+    margin: 0px 20px 20px;
+    .upload-demo {
+      .upload-btn {
+        width: 100px;
+      }
+    }
+    .project-type {
+      display: inline-block;
+      padding: 2px 10px;
+      background-color: #e6f7ff;
+      color: #096dd9;
+      border-radius: 20px;
     }
   }
-  .project-type {
-    display: inline-block;
-    padding: 2px 10px;
-    background-color: #e6f7ff;
-    color: #096dd9;
-    border-radius: 20px;
-  }
-}
 </style>
-<style lang="scss">
+<style lang="less">
 #serviceSummaryType3 {
   .avatar-uploader-icon {
     width: 140px;
     height: 140px;
     line-height: 140px;
-  }
-}
-// 隐藏上传组件
-.hide {
-  .el-upload--picture-card {
-    display: none !important;
   }
 }
 </style>

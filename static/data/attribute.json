@@ -1,0 +1,525 @@
+[
+    {
+        "category": "dt",
+        "data": [
+            {
+                "title": "投保属性",
+                "value": true,
+                "key": "attributeTB",
+                "children": [
+                    {
+                        "describe": "是否：审核保单",
+                        "key": "isExamine",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：让更改主险方案",
+                        "key": "disabledM",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：让更改附加险方案",
+                        "key": "disabledA",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：展示会员等级",
+                        "key": "stars",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否展示服务机构组件",
+                        "key": "ServiceBranch",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "标的规则",
+                "value": true,
+                "key": "attributeBiaoDi",
+                "children": [
+                    {
+                        "describe": "设备列表头部名称",
+                        "key": "elevatorListTitle",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "动态组件",
+                "value": true,
+                "key": "attributeZuJian",
+                "children": [
+                    {
+                        "describe": "新增设备组件",
+                        "key": "elevatorTemplate",
+                        "value": ""
+                    },
+                    {
+                        "describe": "设备列表组件",
+                        "key": "elevatorFatherTemplate",
+                        "value": ""
+                    },
+                    {
+                        "describe": "设备列表预览组件",
+                        "key": "elevatorFatherTemplateSave",
+                        "value": ""
+                    },
+                    {
+                        "describe": "支付组件",
+                        "key": "payTemplate",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "产品因子",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "地区因子对应关系Array",
+                        "key": "areaFactor",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "其他",
+                "value": true,
+                "key": "attributeQiTa",
+                "children": [
+                    {
+                        "describe": "模板更新时间",
+                        "key": "templateUpdateTime",
+                        "value": ""
+                    },
+                    {
+                        "describe": "下载模板标识",
+                        "key": "templateDownloadFlag",
+                        "value": ""
+                    },
+                    {
+                        "describe": "约定被保人",
+                        "key": "appointInsureds",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "西安会员等级",
+                "value": true,
+                "key": "attributeXiAn",
+                "children": [
+                    {
+                        "describe": "会员等级展示",
+                        "key": "showZip_XA",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "重庆会员等级",
+                "value": true,
+                "key": "attributeChongQi",
+                "children": [
+                    {
+                        "describe": "会员等级展示",
+                        "key": "showZip_CQ",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "是否下沉三级机构",
+                "value": true,
+                "key": "attributeThreeBranch",
+                "children": [
+                    {
+                        "describe": "是否：下沉三级机构",
+                        "key": "isThreeBranch",
+                        "value": ""
+                    },
+                    {
+                        "describe": "下沉三级机构对应的数据",
+                        "key": "threeBranchData",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "gz",
+        "data": [
+            {
+                "title": "投保属性",
+                "value": true,
+                "key": "attributeTB",
+                "children": [
+                    {
+                        "describe": "是否：检验第一次投保",
+                        "key": "firstCheck",
+                        "value": ""
+                    },
+                    {
+                        "describe": "第一次投保,最少人数",
+                        "key": "firstNum",
+                        "value": ""
+                    },
+                    {
+                        "describe": "投保最小人数（广东）",
+                        "key": "minNum",
+                        "value": ""
+                    },
+                    {
+                        "describe": "最小人数的类型（广东）",
+                        "key": "personType",
+                        "value": ""
+                    },
+                    {
+                        "describe": "选择服务机构（物业）",
+                        "key": "ServiceBranch",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：审核保单",
+                        "key": "isExamine",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：展示会员等级",
+                        "key": "showVip",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否：支持短期单",
+                        "key": "ISShortTerm",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "标的规则",
+                "value": true,
+                "key": "attributeBiaoDi",
+                "children": [
+                    {
+                        "describe": "最小年龄",
+                        "key": "minAge",
+                        "value": ""
+                    },
+                    {
+                        "describe": "最大年龄",
+                        "key": "maxAge",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "动态组件",
+                "value": true,
+                "key": "attributeZuJian",
+                "children": [
+                    {
+                        "describe": "方案组件",
+                        "key": "fanAnComName",
+                        "value": ""
+                    },
+                    {
+                        "describe": "发票组件",
+                        "key": "InvoiceComponent",
+                        "value": ""
+                    },
+                    {
+                        "describe": "人员组件",
+                        "key": "PersonInfo",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "产品因子",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "地区因子对应关系Array",
+                        "key": "areaFactor",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "其他",
+                "value": true,
+                "key": "attributeQiTa",
+                "children": [
+                    {
+                        "describe": "保费计算方法",
+                        "key": "permiumFun",
+                        "value": ""
+                    },
+                    {
+                        "describe": "提交投保报文方法",
+                        "key": "submitFun",
+                        "value": ""
+                    },
+                    {
+                        "describe": "未知",
+                        "key": "insuredsInfo",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "ty",
+        "data": [
+            {
+                "title": "投保属性",
+                "value": true,
+                "key": "attributeTB",
+                "children": [
+                    {
+                        "describe": "特殊产品选中主线之后，是否展示附加险（数组）",
+                        "key": "policyRiskScheme",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "标的规则",
+                "value": true,
+                "key": "attributeBiaoDi",
+                "children": [
+                    {
+                        "describe": "最小年龄",
+                        "key": "minAge",
+                        "value": ""
+                    },
+                    {
+                        "describe": "最大年龄",
+                        "key": "maxAge",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "动态组件",
+                "value": true,
+                "key": "attributeZuJian",
+                "children": [
+                    {
+                        "describe": "方案组件",
+                        "key": "componentName",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "其他",
+                "value": true,
+                "key": "attributeQiTa",
+                "children": [
+                    {
+                        "describe": "保费计算和投保报文调用方法区分标识",
+                        "key": "rule",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "sd",
+        "data": []
+    },
+    {
+        "category": "wy",
+        "data": [
+            {
+                "title": "产品因子",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "地区因子对应关系Array",
+                        "key": "areaFactor",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "jz",
+        "data": [
+            {
+                "title": "产品因子",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "地区因子对应关系Array",
+                        "key": "areaFactor",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "ab",
+        "data": [
+            {
+                "title": "标的规则",
+                "value": true,
+                "key": "attributeBiaoDi",
+                "children": [
+                    {
+                        "describe": "最小年龄",
+                        "key": "minAge",
+                        "value": ""
+                    },
+                    {
+                        "describe": "最大年龄",
+                        "key": "maxAge",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "保安会员等级",
+                "value": true,
+                "key": "attributeXiAn",
+                "children": [
+                    {
+                        "describe": "会员等级展示",
+                        "key": "showZip_AB_XA",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "动态组件",
+                "value": true,
+                "key": "attributeZuJian",
+                "children": [
+                    {
+                        "describe": "方案组件",
+                        "key": "fanAnComName",
+                        "value": ""
+                    },
+                    {
+                        "describe": "方案组件展示",
+                        "key": "fanAnComNameSave",
+                        "value": ""
+                    },
+                    {
+                        "describe": "支付组件",
+                        "key": "payTemplate",
+                        "value": ""
+                    },
+                    {
+                        "describe": "服务机构组件",
+                        "key": "serviceOrgName",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "产品因子",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "地区因子对应关系Array",
+                        "key": "areaFactor",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "其他",
+                "value": true,
+                "key": "attributeQiTa",
+                "children": [
+                    {
+                        "describe": "保费计算方法",
+                        "key": "permiumFun",
+                        "value": ""
+                    },
+                    {
+                        "describe": "提交投保报文方法",
+                        "key": "submitFun",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "category": "yjsp",
+        "data": [
+            {
+                "title": "标的规则",
+                "value": true,
+                "key": "attributeBiaoDi",
+                "children": [
+                    {
+                        "describe": "最小年龄",
+                        "key": "minAge",
+                        "value": ""
+                    },
+                    {
+                        "describe": "最大年龄",
+                        "key": "maxAge",
+                        "value": ""
+                    },
+                    {
+                        "describe": "是否展示服务机构组件",
+                        "key": "ServiceBranch",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "动态组件",
+                "value": true,
+                "key": "attributeZuJian",
+                "children": [
+                    {
+                        "describe": "方案组件",
+                        "key": "fanAnComName",
+                        "value": ""
+                    },
+                    {
+                        "describe": "人员组件",
+                        "key": "PersonInfo",
+                        "value": ""
+                    },
+                    {
+                        "describe": "发票组件",
+                        "key": "InvoiceComponent",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "title": "其他",
+                "value": true,
+                "key": "attributeYinZi",
+                "children": [
+                    {
+                        "describe": "下载模板标识",
+                        "key": "GZProductCode",
+                        "value": ""
+                    }
+                ]
+            }
+        ]
+    }
+]
