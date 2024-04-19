@@ -117,11 +117,6 @@
       </el-form>
     </div>
     <div class="login-footer">
-      <p>
-        版权所有copyright©2011-2013 江泰保险经纪股份有限公司.All right reserved
-      </p>
-      <p>京公网安备11010802010005号 京ICP备06063404号-5</p>
-      <p>地址：北京市门头沟区莲石湖西路98号院9号楼</p>
     </div>
     <el-dialog
       title="提示"
@@ -134,10 +129,6 @@
         >您的密码已经使用90天了，为了保障您账户的安全，请您在更改密码后再使用。</span
       >
       <changePwd></changePwd>
-      <!-- <span slot="footer" class="dialog-footer">
-				<el-button @click="dialogVisible = false">取 消</el-button>
-				<el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-			</span> -->
     </el-dialog>
   </div>
 </template>
@@ -458,7 +449,11 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  background: @login_bg;
+  // background: @login_bg;
+  background-image:url('../../static/img/dyImage.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 #Login {
   .ms-title {
@@ -469,13 +464,13 @@ export default {
     height: 340px;
     text-align: center;
     font-size: 30px;
-    background: @login_logo;
+    // background: @login_logo;
     color: #fff;
   }
   .ms-login {
     position: absolute;
     box-sizing: border-box;
-    left: 56%;
+    left: 60%;
     top: 50%;
     width: 482px;
     height: auto;
